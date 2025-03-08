@@ -2,9 +2,9 @@
 session_start();
 require 'conexion.php';
 
+// Depuración (puedes quitar esto en producción)
 var_dump(isset($conn)); // Verifica si la conexión está definida
 var_dump($conn); // Muestra el objeto PDO
-// exit; <-- Elimino esto para que el código continúe
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     var_dump($_POST); // Depuración de datos recibidos
@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         $sql = "SELECT * FROM usuarios WHERE email = :email";
-        $stmt = $conn->prepare($sql); // Asegúrate de que usas $conn
+        $stmt = $conn->prepare($sql);
 
         $stmt->bindParam(":email", $email, PDO::PARAM_STR);
         $stmt->execute();
@@ -24,11 +24,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         var_dump($usuario); // Muestra los datos del usuario
 
         if ($usuario && password_verify($password, $usuario['password'])) {
-            $_SESSION['usuario_id'] = $usuario['id']; 
-            $_SESSION['usuario'] = $usuario['nombre']; 
-            $_SESSION['email'] = $usuario['email']; 
+            // Guardar datos en la sesión
+            $_SESSION['usuario_id'] = $usuario['id'];
+            $_SESSION['usuario'] = $usuario['nombre'];
+            $_SESSION['email'] = $usuario['email'];
+            $_SESSION['rol'] = $usuario['rol']; // Asume que 'rol' es la columna
 
-            header("Location: ../front-end/usuario.php");
+            // Redirigir según el rol
+            if ($usuario['rol'] === 'administrador') {
+                header("Location: ../front-end/adm/adm.php");
+            } else {
+                header("Location: ../front-end/usuario.php");
+            }
             exit();
         } else {
             echo "Error: Credenciales incorrectas";
