@@ -1,0 +1,60 @@
+use qqs;
+create database qqs;
+
+CREATE TABLE usuarios (
+    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    telefono VARCHAR(20) DEFAULT NULL,
+    grado VARCHAR(50) DEFAULT NULL,
+    password VARCHAR(255) NOT NULL,
+    avatar VARCHAR(255) DEFAULT 'https://i.postimg.cc/JzBWVhW4/my-avatar.png',
+    rol ENUM('estudiante', 'administrador') DEFAULT 'estudiante'
+);
+
+
+select * from usuarios;
+
+-- Tabla de preguntas
+CREATE TABLE IF NOT EXISTS preguntas (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    texto TEXT NOT NULL,
+    categoria VARCHAR(100) NULL,
+    estado ENUM('activa', 'inactiva') DEFAULT 'activa'
+);
+
+select * from preguntas;
+DESCRIBE preguntas;
+
+-- Tabla de respuestas
+CREATE TABLE IF NOT EXISTS respuestas (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    id_pregunta INT(11) NOT NULL,
+    texto TEXT NOT NULL,
+    valor INT NOT NULL, -- Este valor se usará para calcular la orientación vocacional
+    FOREIGN KEY (id_pregunta) REFERENCES preguntas(id) ON DELETE CASCADE
+);
+
+select * from respuestas;
+
+
+-- Tabla de resultados (para definir carreras según puntajes)
+CREATE TABLE IF NOT EXISTS resultados (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    rango_min INT NOT NULL,
+    rango_max INT NOT NULL,
+    carrera_recomendada VARCHAR(255) NOT NULL,
+    descripcion TEXT NOT NULL
+);
+
+select * from resultados;
+-- Tabla para registrar respuestas de cada usuario
+CREATE TABLE IF NOT EXISTS respuestas_usuario (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT(11) NOT NULL,
+    id_pregunta INT(11) NOT NULL,
+    id_respuesta INT(11) NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_pregunta) REFERENCES preguntas(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_respuesta) REFERENCES respuestas(id) ON DELETE CASCADE
+);

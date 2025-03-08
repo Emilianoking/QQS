@@ -16,7 +16,7 @@
         <div class="container">
             <div class="row justify-content-between align-items-center">
                 <div class="logo">¿Qué Qui<span>ero Ser?</span></div>
-                <input type="checkbox" id="click">
+                <input type="checkbox" id="click">  
                 <label for="click" class="menu-btn">
                     <i class="material-icons">menu</i>
                 </label>

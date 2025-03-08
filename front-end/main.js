@@ -129,4 +129,78 @@ for(let i = 0; i < navigationLinks.length; i++) {
             }
         }
     });
-}            
+}    
+
+// Manejo del mapa
+const locationSelect = document.getElementById('location-select');
+const mapIframe = document.getElementById('map-iframe');
+
+const locations = {
+    uniminuto: {
+        url: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.123456789012!2d-73.6337345!3d4.1125843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9b5c8d8d8d8d%3A0x1234567890abcdef!2sUniminuto%20Villavicencio%2C%20Meta%2C%20Colombia!5e0!3m2!1sen!2sco!4v1717747200!5m2!1sen!2sco"
+    },
+    unad: {
+        url: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.123456789012!2d-73.7709!3d4.0067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9b5c8d8d8d8d%3A0x1234567890abcdef!2sKm1%2C%20V%C3%ADa%20Villavicencio%20-%20Acac%C3%ADas%2C%20Acac%C3%ADas%2C%20Meta%2C%20Colombia!5e0!3m2!1sen!2sco!4v1717747200!5m2!1sen!2sco"
+    }
+};
+
+locationSelect.addEventListener('change', () => {
+    const selectedLocation = locationSelect.value;
+    mapIframe.src = locations[selectedLocation].url;
+});
+
+// Manejo del chat (simulación)
+const chatMessages = document.getElementById('chat-messages');
+const chatInput = document.getElementById('chat-input');
+const chatSend = document.getElementById('chat-send');
+
+function addMessage(content, isUser = false) {
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message', isUser ? 'user-message' : 'bot-message');
+    messageDiv.textContent = content;
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+async function sendMessageToAPI(message) {
+    try {
+        const response = await fetch('../back-end/Grok/api.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.error) {
+            addMessage(`Error: ${data.error}`, false);
+        } else {
+            const botReply = data.choices[0].message.content;
+            addMessage(botReply, false);
+        }
+    } catch (error) {
+        addMessage(`Error: ${error.message}`, false);
+    }
+}
+
+chatSend.addEventListener('click', () => {
+    const message = chatInput.value.trim();
+    if (message) {
+        addMessage(message, true);
+        sendMessageToAPI(message);
+        chatInput.value = '';
+    }
+});
+
+chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && chatInput.value.trim()) {
+        chatSend.click();
+    }
+});
+
+addMessage('¡Hola! Soy Grok, creado por xAI. ¿En qué puedo ayudarte?', false);

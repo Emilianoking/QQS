@@ -1,8 +1,6 @@
 <?php
 session_start();
-require '../back-end/conexion.php'; // Importa la conexión a la BD
-
-// Verifica si el usuario ha iniciado sesión
+require '../back-end/conexion.php'; 
 if (!isset($_SESSION['usuario_id'])) {
     $_SESSION['usuario'] = 'Invitado';
     $_SESSION['email'] = 'No disponible';
@@ -10,11 +8,10 @@ if (!isset($_SESSION['usuario_id'])) {
     $_SESSION['grado'] = 'No definido';
     $_SESSION['avatar'] = $usuario['avatar'] ?? "https://i.postimg.cc/JzBWVhW4/my-avatar.png";
 } else {
-    // Obtiene los datos del usuario desde la BD
     $usuario_id = $_SESSION['usuario_id'];
     $sql = "SELECT nombre, email, telefono, grado, avatar FROM usuarios WHERE id = ?";
-    $stmt = $conn->prepare($sql); // Cambiado de $conexion a $conn
-    $stmt->bindParam(1, $usuario_id, PDO::PARAM_INT); // Usar bindParam en lugar de bind_param
+    $stmt = $conn->prepare($sql); 
+    $stmt->bindParam(1, $usuario_id, PDO::PARAM_INT); 
     $stmt->execute();
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -23,13 +20,14 @@ if (!isset($_SESSION['usuario_id'])) {
         $_SESSION['email'] = $usuario['email'];
         $_SESSION['telefono'] = $usuario['telefono'];
         $_SESSION['grado'] = $usuario['grado'];
-        $_SESSION['avatar'] = $usuario['avatar'] ?? "https://i.postimg.cc/JzBWVhW4/my-avatar.png"; // Imagen por defecto
+        $_SESSION['avatar'] = $usuario['avatar'] ?? "https://i.postimg.cc/JzBWVhW4/my-avatar.png"; 
     }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,66 +35,67 @@ if (!isset($_SESSION['usuario_id'])) {
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="https://i.postimg.cc/9fqYVvxh/logo.png" type="image/x-icon">
 </head>
+
 <body>
     <main>
-    <aside class="sidebar" data-sidebar>
-    <div class="sidebar-info">
-        <figure class="avatar-box">
-            <img src="<?php echo $_SESSION['avatar']; ?>" alt="avatar" width="80">
-        </figure>
+        <aside class="sidebar" data-sidebar>
+            <div class="sidebar-info">
+                <figure class="avatar-box">
+                    <img src="<?php echo $_SESSION['avatar']; ?>" alt="avatar" width="80">
+                </figure>
 
-        <div class="info-content">
-            <h1 class="name"><?php echo $_SESSION['usuario']; ?></h1>
-        </div>
-
-        <button class="info-more-btn" data-sidebar-btn>
-            <span>Informacion personal</span>
-            <ion-icon name="chevron-down"></ion-icon>
-        </button>
-    </div>
-
-    <div class="sidebar-info-more">
-        <div class="separator"></div>
-
-        <ul class="contacts-list">
-            <li class="contact-item">
-                <div class="icon-box">
-                    <ion-icon name="mail-outline"></ion-icon>
+                <div class="info-content">
+                    <h1 class="name"><?php echo $_SESSION['usuario']; ?></h1>
                 </div>
-                <div class="contact-info">
-                    <p class="contact-title">Email</p>
-                    <a href="mailto:<?php echo $_SESSION['email']; ?>" class="contact-link">
-                        <?php echo $_SESSION['email']; ?>
-                    </a>
-                </div>
-            </li>
 
-            <li class="contact-item">
-                <div class="icon-box">
-                    <ion-icon name="phone-portrait-outline"></ion-icon>
-                </div>
-                <div class="contact-info">
-                    <p class="contact-title">Teléfono</p>
-                    <a href="tel:<?php echo $_SESSION['telefono']; ?>" class="contact-link">
-                        <?php echo $_SESSION['telefono']; ?>
-                    </a>
-                </div>
-            </li>
+                <button class="info-more-btn" data-sidebar-btn>
+                    <span>Informacion personal</span>
+                    <ion-icon name="chevron-down"></ion-icon>
+                </button>
+            </div>
 
-            <li class="contact-item">
-                <div class="icon-box">
-                    <ion-icon name="briefcase-outline"></ion-icon>
-                </div>
-                <div class="contact-info">
-                    <p class="contact-title">Grado</p>
-                    <address><?php echo $_SESSION['grado']; ?></address>
-                </div>
-            </li>
-        </ul>
+            <div class="sidebar-info-more">
+                <div class="separator"></div>
 
-        <div class="separator"></div>
-    </div>
-</aside>
+                <ul class="contacts-list">
+                    <li class="contact-item">
+                        <div class="icon-box">
+                            <ion-icon name="mail-outline"></ion-icon>
+                        </div>
+                        <div class="contact-info">
+                            <p class="contact-title">Email</p>
+                            <a href="mailto:<?php echo $_SESSION['email']; ?>" class="contact-link">
+                                <?php echo $_SESSION['email']; ?>
+                            </a>
+                        </div>
+                    </li>
+
+                    <li class="contact-item">
+                        <div class="icon-box">
+                            <ion-icon name="phone-portrait-outline"></ion-icon>
+                        </div>
+                        <div class="contact-info">
+                            <p class="contact-title">Teléfono</p>
+                            <a href="tel:<?php echo $_SESSION['telefono']; ?>" class="contact-link">
+                                <?php echo $_SESSION['telefono']; ?>
+                            </a>
+                        </div>
+                    </li>
+
+                    <li class="contact-item">
+                        <div class="icon-box">
+                            <ion-icon name="briefcase-outline"></ion-icon>
+                        </div>
+                        <div class="contact-info">
+                            <p class="contact-title">Grado</p>
+                            <address><?php echo $_SESSION['grado']; ?></address>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="separator"></div>
+            </div>
+        </aside>
 
 
         <div class="main-content">
@@ -116,59 +115,15 @@ if (!isset($_SESSION['usuario_id'])) {
                 </header>
 
                 <section class="about-text">
-                    <p>I'm Creative Director and UI/UX Designer from Sydney, Australia, working in web development and print media. I enjoy turning complex problems into simple, beautiful and intuitive designs.</p>
-                    <p>My job is to build your website so that it is functional and user-friendly but at the same time attractive. Moreover, I add personal touch to your product and make sure that is eye-catching and easy to use. My aim is to bring across your message and identity in the most creative way. I created web design for many famous brand companies.</p>
+                    <p>I'm Creative Director and UI/UX Designer from Sydney, Australia, working in web development and
+                        print media. I enjoy turning complex problems into simple, beautiful and intuitive designs.</p>
+                    <p>My job is to build your website so that it is functional and user-friendly but at the same time
+                        attractive. Moreover, I add personal touch to your product and make sure that is eye-catching
+                        and easy to use. My aim is to bring across your message and identity in the most creative way. I
+                        created web design for many famous brand companies.</p>
                 </section>
 
-                <section class="service">
-                    <h3 class="h3 service-title">What I'm doing</h3>
 
-                    <ul class="service-list">
-                        <li class="service-item">
-                            <div class="service-icon-box">
-                                <img src="https://i.postimg.cc/4389jZkP/icon-design.png" alt="icon" width="40">
-                            </div>
-
-                            <div class="service-content-box">
-                                <h4 class="h4 service-item-title">Web Design</h4>
-                                <p class="service-item-text">The most modern and high-quality design made at a professional level.</p>
-                            </div>
-                        </li>
-
-                        <li class="service-item">
-                            <div class="service-icon-box">
-                                <img src="https://i.postimg.cc/ZqgqrqzG/icon-dev.png" alt="icon" width="40">
-                            </div>
-
-                            <div class="service-content-box">
-                                <h4 class="h4 service-item-title">Web development</h4>
-                                <p class="service-item-text">High-quality development of sites at the professional level.</p>
-                            </div>
-                        </li>
-
-                        <li class="service-item">
-                            <div class="service-icon-box">
-                                <img src="https://i.postimg.cc/xjLdzYxZ/icon-app.png" alt="icon" width="40">
-                            </div>
-
-                            <div class="service-content-box">
-                                <h4 class="h4 service-item-title">Mobile apps</h4>
-                                <p class="service-item-text">Professional development of applications for iOS and Android.</p>
-                            </div>
-                        </li>
-
-                        <li class="service-item">
-                            <div class="service-icon-box">
-                                <img src="https://i.postimg.cc/0NL8zHpx/icon-photo.png" alt="icon" width="40">
-                            </div>
-
-                            <div class="service-content-box">
-                                <h4 class="h4 service-item-title">Photography</h4>
-                                <p class="service-item-text">I make high-quality photos of any category at a professional level.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </section>
 
                 <section class="testimonials">
                     <h3 class="h3 testimonials-title">Testimonials</h3>
@@ -177,13 +132,17 @@ if (!isset($_SESSION['usuario_id'])) {
                         <li class="testimonials-item">
                             <div class="content-card" data-testimonials-item>
                                 <figure class="testimonials-avatar-box">
-                                    <img src="https://i.postimg.cc/zGDHfn3G/avatar-1.png" alt="avatar" data-testimonials-avatar width="60">
+                                    <img src="https://i.postimg.cc/zGDHfn3G/avatar-1.png" alt="avatar"
+                                        data-testimonials-avatar width="60">
                                 </figure>
 
                                 <h4 class="h4 testimonials-item-title" data-testimonials-title>Daniel Lewis</h4>
 
                                 <div class="testimonials-text" data-testimonials-text>
-                                    <p>Richard was hired to create a corporate identity. It's modern, clean and with a beautiful design that got a lot of praises from colleagues and visitors. We were very pleased with the work done. He has a lot of experience and is very concerned about the needs of client.</p>
+                                    <p>Richard was hired to create a corporate identity. It's modern, clean and with a
+                                        beautiful design that got a lot of praises from colleagues and visitors. We were
+                                        very pleased with the work done. He has a lot of experience and is very
+                                        concerned about the needs of client.</p>
                                 </div>
                             </div>
                         </li>
@@ -191,13 +150,16 @@ if (!isset($_SESSION['usuario_id'])) {
                         <li class="testimonials-item">
                             <div class="content-card" data-testimonials-item>
                                 <figure class="testimonials-avatar-box">
-                                    <img src="https://i.postimg.cc/DwY0yHtx/avatar-2.png" alt="avatar" data-testimonials-avatar width="60">
+                                    <img src="https://i.postimg.cc/DwY0yHtx/avatar-2.png" alt="avatar"
+                                        data-testimonials-avatar width="60">
                                 </figure>
 
                                 <h4 class="h4 testimonials-item-title" data-testimonials-title>Jessica Miller</h4>
 
                                 <div class="testimonials-text" data-testimonials-text>
-                                    <p>Working with Richard has been an absolute pleasure. I was impressed with his attention to detail, his web design skills and his professional approach to our timelines and processes.</p>
+                                    <p>Working with Richard has been an absolute pleasure. I was impressed with his
+                                        attention to detail, his web design skills and his professional approach to our
+                                        timelines and processes.</p>
                                 </div>
                             </div>
                         </li>
@@ -205,13 +167,16 @@ if (!isset($_SESSION['usuario_id'])) {
                         <li class="testimonials-item">
                             <div class="content-card" data-testimonials-item>
                                 <figure class="testimonials-avatar-box">
-                                    <img src="https://i.postimg.cc/fRFWhX9F/avatar-3.png" alt="avatar" data-testimonials-avatar width="60">
+                                    <img src="https://i.postimg.cc/fRFWhX9F/avatar-3.png" alt="avatar"
+                                        data-testimonials-avatar width="60">
                                 </figure>
 
                                 <h4 class="h4 testimonials-item-title" data-testimonials-title>Emily Evans</h4>
 
                                 <div class="testimonials-text" data-testimonials-text>
-                                    <p>I couldn't be happier with the website that Richard created for us. His attention to detail and creativity is unmatched. Our clients frequently compliment the design, and it has significantly improved our brand image.</p>
+                                    <p>I couldn't be happier with the website that Richard created for us. His attention
+                                        to detail and creativity is unmatched. Our clients frequently compliment the
+                                        design, and it has significantly improved our brand image.</p>
                                 </div>
                             </div>
                         </li>
@@ -219,13 +184,17 @@ if (!isset($_SESSION['usuario_id'])) {
                         <li class="testimonials-item">
                             <div class="content-card" data-testimonials-item>
                                 <figure class="testimonials-avatar-box">
-                                    <img src="https://i.postimg.cc/zXv1Xv81/avatar-4.png" alt="avatar" data-testimonials-avatar width="60">
+                                    <img src="https://i.postimg.cc/zXv1Xv81/avatar-4.png" alt="avatar"
+                                        data-testimonials-avatar width="60">
                                 </figure>
 
                                 <h4 class="h4 testimonials-item-title" data-testimonials-title>Henry Williams</h4>
 
                                 <div class="testimonials-text" data-testimonials-text>
-                                    <p>I was overwhelmed with the thought of redesigning my online store, but Richard made the process seamless. The site is not only visually appealing but also optimized for conversions. I've seen a 50% increase in traffic since the launch!</p>
+                                    <p>I was overwhelmed with the thought of redesigning my online store, but Richard
+                                        made the process seamless. The site is not only visually appealing but also
+                                        optimized for conversions. I've seen a 50% increase in traffic since the launch!
+                                    </p>
                                 </div>
                             </div>
                         </li>
@@ -236,11 +205,13 @@ if (!isset($_SESSION['usuario_id'])) {
                     <div class="overlay " data-overlay></div>
 
                     <section class="testimonials-modal">
-                        <button class="modal-close-btn" data-modal-close-btn><ion-icon name="close-outline"></ion-icon></button>
+                        <button class="modal-close-btn" data-modal-close-btn><ion-icon
+                                name="close-outline"></ion-icon></button>
 
                         <div class="modal-img-wrapper">
                             <figure class="modal-avatar-box">
-                                <img src="https://i.postimg.cc/zGDHfn3G/avatar-1.png" alt="Daniel Lewis" width="80" data-modal-img>
+                                <img src="https://i.postimg.cc/zGDHfn3G/avatar-1.png" alt="Daniel Lewis" width="80"
+                                    data-modal-img>
                             </figure>
 
                             <img src="https://i.postimg.cc/mZ00RwX7/icon-quote.png" alt="quote icon">
@@ -251,44 +222,36 @@ if (!isset($_SESSION['usuario_id'])) {
                             <time datetime="2023-06-14">14 June, 2023</time>
 
                             <div class="modal-text" data-modal-text>
-                                <p>Richard was hired to create a corporate identity. It's modern, clean and with a beautiful design that got a lot of praises from colleagues and visitors. We were very pleased with the work done. He has a lot of experience and is very concerned about the needs of client.</p>
+                                <p>Richard was hired to create a corporate identity. It's modern, clean and with a
+                                    beautiful design that got a lot of praises from colleagues and visitors. We were
+                                    very pleased with the work done. He has a lot of experience and is very concerned
+                                    about the needs of client.</p>
                             </div>
                         </div>
                     </section>
                 </div>
 
                 <section class="clients">
-                    <h3 class="h3 clients-title">Clients</h3>
+                    <h3 class="h3 clients-title">Universidades convenio</h3>
 
                     <ul class="clients-list has-scrollbar">
                         <li class="clients-item">
-                            <a href="#"><img src="https://i.postimg.cc/YqfKyG66/logo-1-color.png" alt="logo"></a>
+                            <a href="https://www.uniminuto.edu/oriente" target="_blank">
+                                <img src="https://ulibros.com/publisher/ilogo/8a831d50869bd4271f1b20a4a0acf44b"
+                                    alt="logo">
+                            </a>
                         </li>
-
                         <li class="clients-item">
-                            <a href="#"><img src="https://i.postimg.cc/fWm6JtgG/logo-2-color.png" alt="logo"></a>
-                        </li>
-
-                        <li class="clients-item">
-                            <a href="#"><img src="https://i.postimg.cc/Bb07xpwd/logo-3-color.png" alt="logo"></a>
-                        </li>
-
-                        <li class="clients-item">
-                            <a href="#"><img src="https://i.postimg.cc/hv1yMmkh/logo-4-color.png" alt="logo"></a>
-                        </li>
-
-                        <li class="clients-item">
-                            <a href="#"><img src="https://i.postimg.cc/ry1P86Dc/logo-5-color.png" alt="logo"></a>
-                        </li>
-
-                        <li class="clients-item">
-                            <a href="#"><img src="https://i.postimg.cc/SsWDN8NV/logo-6-color.png" alt="logo"></a>
+                            <a href="https://estudios.unad.edu.co/descuentos-por-convenios-institucionales/municipio-de-acacias-meta" target="_blank">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-flZjMI0abrc0Lgubyn2hedBQG6Zfppi3jA&s"
+                                    alt="logo">
+                            </a>
                         </li>
                     </ul>
                 </section>
 
             </article>
-            
+
             <article class="resume " data-page="resume">
                 <header>
                     <h2 class="h2 article-title">Resume</h2>
@@ -305,19 +268,27 @@ if (!isset($_SESSION['usuario_id'])) {
                         <li class="timeline-item">
                             <h4 class="h4 timeline-item-title">University school of the arts</h4>
                             <span>2008 - 2010</span>
-                            <p class="timeline-text">There I learnt a wide range of topics that are essential to understanding both the theory and practical aspects of computing. This involves programming fundamentals, computer architecture, operating systems, databases, software engineering, problem solving, collaboration and communication soft skills.</p>
+                            <p class="timeline-text">There I learnt a wide range of topics that are essential to
+                                understanding both the theory and practical aspects of computing. This involves
+                                programming fundamentals, computer architecture, operating systems, databases, software
+                                engineering, problem solving, collaboration and communication soft skills.</p>
                         </li>
 
                         <li class="timeline-item">
                             <h4 class="h4 timeline-item-title">New York Academy of Art</h4>
                             <span>2006 - 2007</span>
-                            <p class="timeline-text">I chose my master degree in technology. There I deepened my knowledge, enhanced my skills in the area and learnt how to increase my career prospects in a competitive job market.</p>
+                            <p class="timeline-text">I chose my master degree in technology. There I deepened my
+                                knowledge, enhanced my skills in the area and learnt how to increase my career prospects
+                                in a competitive job market.</p>
                         </li>
 
                         <li class="timeline-item">
                             <h4 class="h4 timeline-item-title">High School of Art and Design</h4>
                             <span>2003 - 2005</span>
-                            <p class="timeline-text">There I learnt foundational courses and computer sciences fundamentals. In the institution, I chose my specialization in web-development that involves front-end and back-end technologies, user interface designs and content management systems.</p>
+                            <p class="timeline-text">There I learnt foundational courses and computer sciences
+                                fundamentals. In the institution, I chose my specialization in web-development that
+                                involves front-end and back-end technologies, user interface designs and content
+                                management systems.</p>
                         </li>
                     </ol>
                 </section>
@@ -333,19 +304,24 @@ if (!isset($_SESSION['usuario_id'])) {
                         <li class="timeline-item">
                             <h4 class="h4 timeline-item-title">Creative director</h4>
                             <span>2015 - Present</span>
-                            <p class="timeline-text">I can develop and oversee creative concepts for projects and campaigns managing a team of designers, writers, and other creative professionals.</p>
+                            <p class="timeline-text">I can develop and oversee creative concepts for projects and
+                                campaigns managing a team of designers, writers, and other creative professionals.</p>
                         </li>
 
                         <li class="timeline-item">
                             <h4 class="h4 timeline-item-title">Art director</h4>
                             <span>2013 - 2015</span>
-                            <p class="timeline-text">I create and develop visual concepts that align with the project's goals and objectives, supervising the design process and managing timelines and budgets for design projects.</p>
+                            <p class="timeline-text">I create and develop visual concepts that align with the project's
+                                goals and objectives, supervising the design process and managing timelines and budgets
+                                for design projects.</p>
                         </li>
 
                         <li class="timeline-item">
                             <h4 class="h4 timeline-item-title">Web designer</h4>
                             <span>2010 - 2013</span>
-                            <p class="timeline-text">I create logos, color schemes and typography for a brand's identity. Also I develop graphics for websites, social media and digital ads with applications that enhance user experience.</p>
+                            <p class="timeline-text">I create logos, color schemes and typography for a brand's
+                                identity. Also I develop graphics for websites, social media and digital ads with
+                                applications that enhance user experience.</p>
                         </li>
                     </ol>
                 </section>
@@ -484,7 +460,8 @@ if (!isset($_SESSION['usuario_id'])) {
                                         <ion-icon name="eye-outline"></ion-icon>
                                     </div>
 
-                                    <img src="https://i.postimg.cc/dtpXxNGb/project-4.png" alt="brawlhalla" loading="lazy">
+                                    <img src="https://i.postimg.cc/dtpXxNGb/project-4.png" alt="brawlhalla"
+                                        loading="lazy">
                                 </figure>
 
                                 <h3 class="project-title">Brawlhalla</h3>
@@ -514,7 +491,8 @@ if (!isset($_SESSION['usuario_id'])) {
                                         <ion-icon name="eye-outline"></ion-icon>
                                     </div>
 
-                                    <img src="https://i.postimg.cc/qR1DX1kZ/project-6.png" alt="metaspark" loading="lazy">
+                                    <img src="https://i.postimg.cc/qR1DX1kZ/project-6.png" alt="metaspark"
+                                        loading="lazy">
                                 </figure>
 
                                 <h3 class="project-title">Metaspark</h3>
@@ -544,7 +522,8 @@ if (!isset($_SESSION['usuario_id'])) {
                                         <ion-icon name="eye-outline"></ion-icon>
                                     </div>
 
-                                    <img src="https://i.postimg.cc/rw2j4B1w/project-8.jpg" alt="task manager" loading="lazy">
+                                    <img src="https://i.postimg.cc/rw2j4B1w/project-8.jpg" alt="task manager"
+                                        loading="lazy">
                                 </figure>
 
                                 <h3 class="project-title">Task Manager</h3>
@@ -579,9 +558,10 @@ if (!isset($_SESSION['usuario_id'])) {
                     <ul class="blog-posts-list">
                         <li class="blog-post-item">
                             <a href="#">
-                                    <figure class="blog-banner-box">
-                                        <img src="https://i.postimg.cc/DysCZrWs/blog-1.jpg" alt="Design conferences in 2024" loading="lazy">
-                                    </figure>
+                                <figure class="blog-banner-box">
+                                    <img src="https://i.postimg.cc/DysCZrWs/blog-1.jpg" alt="Design conferences in 2024"
+                                        loading="lazy">
+                                </figure>
 
                                 <div class="blog-content">
                                     <div class="blog-meta">
@@ -591,7 +571,9 @@ if (!isset($_SESSION['usuario_id'])) {
                                     </div>
 
                                     <h3 class="h3 blog-item-title">Design conferences in 2024</h3>
-                                    <p class="blog-text">In 2024, several exciting design conferences are set to take place, offering opportunities for professionals and enthusiasts to connect, learn, and share innovative ideas.</p>
+                                    <p class="blog-text">In 2024, several exciting design conferences are set to take
+                                        place, offering opportunities for professionals and enthusiasts to connect,
+                                        learn, and share innovative ideas.</p>
                                 </div>
                             </a>
                         </li>
@@ -599,7 +581,8 @@ if (!isset($_SESSION['usuario_id'])) {
                         <li class="blog-post-item">
                             <a href="#">
                                 <figure class="blog-banner-box">
-                                    <img src="https://i.postimg.cc/QC7qFDMs/blog-2.jpg" alt="Best fonts every designer" loading="lazy">
+                                    <img src="https://i.postimg.cc/QC7qFDMs/blog-2.jpg" alt="Best fonts every designer"
+                                        loading="lazy">
                                 </figure>
 
 
@@ -611,7 +594,10 @@ if (!isset($_SESSION['usuario_id'])) {
                                     </div>
 
                                     <h3 class="h3 blog-item-title">Best fonts every designer</h3>
-                                    <p class="blog-text">When it comes to typography, choosing the right font is essential for effective design. In this article, I'll bring a brief overview of some of the best fonts that every designer should consider incorporating into their toolkit.</p>
+                                    <p class="blog-text">When it comes to typography, choosing the right font is
+                                        essential for effective design. In this article, I'll bring a brief overview of
+                                        some of the best fonts that every designer should consider incorporating into
+                                        their toolkit.</p>
                                 </div>
                             </a>
                         </li>
@@ -619,7 +605,8 @@ if (!isset($_SESSION['usuario_id'])) {
                         <li class="blog-post-item">
                             <a href="#">
                                 <figure class="blog-banner-box">
-                                    <img src="https://i.postimg.cc/W1T71QcL/blog-3.jpg" alt="Design digest #80" loading="lazy">
+                                    <img src="https://i.postimg.cc/W1T71QcL/blog-3.jpg" alt="Design digest #80"
+                                        loading="lazy">
                                 </figure>
 
                                 <div class="blog-content">
@@ -630,7 +617,10 @@ if (!isset($_SESSION['usuario_id'])) {
                                     </div>
 
                                     <h3 class="h3 blog-item-title">Design digest #80</h3>
-                                    <p class="blog-text">Hello, my friends. In this Design Digest, I'll show you a curated collection of the latest trends, insights, and innovations in the design world. This edition highlights key themes and discussions that are shaping the future of design.</p>
+                                    <p class="blog-text">Hello, my friends. In this Design Digest, I'll show you a
+                                        curated collection of the latest trends, insights, and innovations in the design
+                                        world. This edition highlights key themes and discussions that are shaping the
+                                        future of design.</p>
                                 </div>
                             </a>
                         </li>
@@ -638,7 +628,8 @@ if (!isset($_SESSION['usuario_id'])) {
                         <li class="blog-post-item">
                             <a href="#">
                                 <figure class="blog-banner-box">
-                                    <img src="https://i.postimg.cc/2S0n8yxh/blog-4.jpg" alt="2023 UI interactions" loading="lazy">
+                                    <img src="https://i.postimg.cc/2S0n8yxh/blog-4.jpg" alt="2023 UI interactions"
+                                        loading="lazy">
                                 </figure>
 
                                 <div class="blog-content">
@@ -649,7 +640,10 @@ if (!isset($_SESSION['usuario_id'])) {
                                     </div>
 
                                     <h3 class="h3 blog-item-title">2023 UI interactions</h3>
-                                    <p class="blog-text">As we move into 2024, 2023 was marked by the rapidly evolution of the landscape of UI interactions, driven by advancements in technology and user expectations. Dive with me in this text to see the main areas changed in this year.</p>
+                                    <p class="blog-text">As we move into 2024, 2023 was marked by the rapidly evolution
+                                        of the landscape of UI interactions, driven by advancements in technology and
+                                        user expectations. Dive with me in this text to see the main areas changed in
+                                        this year.</p>
                                 </div>
                             </a>
                         </li>
@@ -657,7 +651,8 @@ if (!isset($_SESSION['usuario_id'])) {
                         <li class="blog-post-item">
                             <a href="#">
                                 <figure class="blog-banner-box">
-                                    <img src="https://i.postimg.cc/YCCmVkw9/blog-5.jpg" alt="The forgotten art of spacing" loading="lazy">
+                                    <img src="https://i.postimg.cc/YCCmVkw9/blog-5.jpg"
+                                        alt="The forgotten art of spacing" loading="lazy">
                                 </figure>
 
                                 <div class="blog-content">
@@ -668,7 +663,11 @@ if (!isset($_SESSION['usuario_id'])) {
                                     </div>
 
                                     <h3 class="h3 blog-item-title">The forgotten art of spacing</h3>
-                                    <p class="blog-text">In the realm of design, spacing is often an overlooked yet crucial element that can significantly impact the overall aesthetic and functionality of a composition. This post will emphasize the importance of white space, margins, and padding in creating visually appealing and effective designs.</p>
+                                    <p class="blog-text">In the realm of design, spacing is often an overlooked yet
+                                        crucial element that can significantly impact the overall aesthetic and
+                                        functionality of a composition. This post will emphasize the importance of white
+                                        space, margins, and padding in creating visually appealing and effective
+                                        designs.</p>
                                 </div>
                             </a>
                         </li>
@@ -676,7 +675,8 @@ if (!isset($_SESSION['usuario_id'])) {
                         <li class="blog-post-item">
                             <a href="#">
                                 <figure class="blog-banner-box">
-                                    <img src="https://i.postimg.cc/zBCBvP16/blog-6.jpg" alt="Design digest #79" loading="lazy">
+                                    <img src="https://i.postimg.cc/zBCBvP16/blog-6.jpg" alt="Design digest #79"
+                                        loading="lazy">
                                 </figure>
 
                                 <div class="blog-content">
@@ -687,7 +687,10 @@ if (!isset($_SESSION['usuario_id'])) {
                                     </div>
 
                                     <h3 class="h3 blog-item-title">Design digest #79</h3>
-                                    <p class="blog-text">Hi, my friends. In this Design Digest I'll focus in the tools and resources that we use daily in our projects. Also, I'll include examples of software recommendations, online courses, and design communities that foster collaboration and learning.</p>
+                                    <p class="blog-text">Hi, my friends. In this Design Digest I'll focus in the tools
+                                        and resources that we use daily in our projects. Also, I'll include examples of
+                                        software recommendations, online courses, and design communities that foster
+                                        collaboration and learning.</p>
                                 </div>
                             </a>
                         </li>
@@ -695,36 +698,33 @@ if (!isset($_SESSION['usuario_id'])) {
                 </section>
             </article>
 
-            <article class="contact " data-page="contact">
-                <header>
-                    <h2 class="h2 article-title">Contact</h2>
-                </header>
+            <article class="contact" data-page="contact">
+        <header>
+            <h2 class="h2 article-title">Contact</h2>
+        </header>
 
-                <section class="mapbox" data-mapbox>
-                    <figure>
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d199666.5651251294!2d-121.58334177520186!3d38.56165006739519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809ac672b28397f9%3A0x921f6aaa74197fdb!2sSacramento%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1647608789441!5m2!1sen!2sbd"
-                         width="400" height="300" loading="lazy"></iframe>
-                    </figure>
-                </section>
+        <section class="mapbox" data-mapbox>
+            <select id="location-select">
+                <option value="uniminuto">Uniminuto Villavicencio</option>
+                <option value="unad">UNAD Acacias</option>
+            </select>
+            <figure>
+                <iframe
+                    id="map-iframe"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.123456789012!2d-73.6267!3d4.1450!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9b5c8d8d8d8d%3A0x1234567890abcdef!2sUniminuto%20Villavicencio%2C%20Meta%2C%20Colombia!5e0!3m2!1sen!2sco!4v1717747200!5m2!1sen!2sco"
+                    width="400" height="300" loading="lazy" allowfullscreen="" style="border:0;"></iframe>
+            </figure>
+        </section>
 
-                <section class="contact-form">
-                    <h3 class="h3 form-title">Contact Form</h3>
-
-                    <form action="#" class="form" data-form>
-                        <div class="input-wrapper">
-                            <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
-                            <input type="email" name="email" class="form-input" placeholder="Email Address" required data-form-input>
-                        </div>
-
-                        <input name="message" class="form-input" placeholder="Your Message" required data-form-input="" />
-
-                        <button class="form-btn" type="submit" disabled data-form-btn>
-                            <ion-icon name="paper-plane"></ion-icon>
-                            <span>Send Message</span>
-                        </button>
-                    </form>
-                </section>
-            </article>
+        <section class="chat-section">
+            <h3 class="h3 form-title">Chat with Grok</h3>
+            <div class="chat-messages" id="chat-messages"></div>
+            <div class="chat-input-container">
+                <input type="text" id="chat-input" placeholder="Escribe tu mensaje...">
+                <button id="chat-send">Enviar</button>
+            </div>
+        </section>
+    </article>
         </div>
     </main>
 
@@ -733,4 +733,5 @@ if (!isset($_SESSION['usuario_id'])) {
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
-</html>            
+
+</html>
