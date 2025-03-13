@@ -11,4 +11,7 @@ class User extends Authenticatable
     protected $table = 'usuarios';
     protected $fillable = ['nombre', 'email', 'telefono', 'grado', 'password', 'rol', 'avatar'];
     protected $hidden = ['password', 'remember_token'];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }
