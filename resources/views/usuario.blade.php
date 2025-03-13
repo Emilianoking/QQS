@@ -83,8 +83,8 @@
                     <h2 class="h2 article-title">Bienvenido</h2>
                 </header>
                 <section class="about-text">
-                    <p>Bienvenido, {{ Auth::user()->nombre }}. Este es tu panel personal donde puedes explorar recursos educativos y orientación vocacional.</p>
-                    <p>Estamos aquí para ayudarte a descubrir tu futuro y elegir el camino que más te apasiona.</p>
+                    <p><span id="welcome-message">Cargando...</span></p>
+                    
                 </section>
 
                 <section class="testimonials">
@@ -254,10 +254,34 @@
         </div>
     </main>
 
+    <!-- Incluir jQuery para la solicitud AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Script para cargar el mensaje de bienvenida -->
+    <script>
+        $(document).ready(function() {
+            // Obtener el mensaje de bienvenida desde la API
+            $.ajax({
+                url: '{{ route('welcome.message') }}',
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    $('#welcome-message').text(response);
+                },
+                error: function(xhr, status, error) {
+                    $('#welcome-message').text('Error al cargar el mensaje');
+                }
+            });
+        });
+    </script>
+
+    <!-- Scripts existentes -->
     <script src="{{ asset('js/usuario/main.js') }}"></script>
-<script src="{{ asset('js/usuario/map.js') }}"></script>
-<script src="{{ asset('js/usuario/chat.js') }}"></script>
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="{{ asset('js/usuario/map.js') }}"></script>
+    <script src="{{ asset('js/usuario/chat.js') }}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

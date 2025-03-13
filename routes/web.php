@@ -3,6 +3,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\OpenAIController;
 use Illuminate\Support\Facades\Route;
 
 // Rutas existentes
@@ -13,7 +14,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('adm', fn() => view('adm'))->middleware('auth');
 Route::get('usuario', fn() => view('usuario'))->middleware('auth');
 
-// Rutas movidas desde api.php (sin prefijo api/)
+// Rutas existentes movidas de api.php
 Route::middleware('auth')->group(function () {
     Route::post('/xai', [ApiController::class, 'sendToXai']);
     Route::get('/users', [UserController::class, 'index']);
@@ -24,3 +25,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/questions/update', [QuestionController::class, 'update']);
     Route::post('/questions/delete', [QuestionController::class, 'destroy']);
 });
+
+// Nueva ruta para el mensaje de bienvenida
+Route::get('/welcome-message', [OpenAIController::class, 'generateWelcomeMessage'])->middleware('auth')->name('welcome.message');
