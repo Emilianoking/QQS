@@ -160,6 +160,81 @@
                         </form>
                     </div>
                 </div>
+<!-- Nueva sección: Agregar Carrera -->
+<h3 class="h3 service-title">Agregar Carrera</h3>
+<section class="service">
+    <form id="formCarrera">
+        <label>Nombre:</label>
+        <input type="text" name="nombre" required>
+
+        <label>Descripción:</label>
+        <textarea name="descripcion"></textarea>
+
+        <label>Categoría:</label>
+        <input type="text" name="categoria">
+
+        <label>Universidad:</label>
+        <input type="text" name="universidad">
+
+        <label>Nivel Educativo:</label>
+        <select name="nivel_educativo">
+            <option value="">Seleccione un nivel</option>
+            <option value="técnico">Técnico</option>
+            <option value="tecnólogo">Tecnólogo</option>
+            <option value="profesional">Profesional</option>
+        </select>
+
+        <label>Estado:</label>
+        <select name="estado">
+            <option value="activa">Activa</option>
+            <option value="inactiva">Inactiva</option>
+        </select>
+
+        <button type="submit">Guardar Carrera</button>
+    </form>
+
+    <div id="mensajeCarrera"></div>
+</section>
+
+<!-- Nueva sección: Ver Carreras -->
+<h3 class="h3 service-title">Ver Carreras</h3>
+<section class="service">
+    <div id="carreraTable">
+        <!-- Aquí se cargará la tabla de carreras -->
+    </div>
+</section>
+
+<!-- Modal para actualizar carrera -->
+<div id="updateCarreraModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeCarreraModal()">×</span>
+        <h2>Actualizar Carrera</h2>
+        <form id="updateCarreraForm">
+            <input type="hidden" id="carreraId">
+            <label>Nombre:</label>
+            <input type="text" id="carreraNombre" required>
+            <label>Descripción:</label>
+            <textarea id="carreraDescripcion"></textarea>
+            <label>Categoría:</label>
+            <input type="text" id="carreraCategoria">
+            <label>Universidad:</label>
+            <input type="text" id="carreraUniversidad">
+            <label>Nivel Educativo:</label>
+            <select id="carreraNivelEducativo">
+                <option value="">Seleccione un nivel</option>
+                <option value="técnico">Técnico</option>
+                <option value="tecnólogo">Tecnólogo</option>
+                <option value="profesional">Profesional</option>
+            </select>
+            <label>Estado:</label>
+            <select id="carreraEstado">
+                <option value="activa">Activa</option>
+                <option value="inactiva">Inactiva</option>
+            </select>
+            <button type="submit">Actualizar Carrera</button>
+        </form>
+    </div>
+</div>
             </article>
         </div>
     </main>

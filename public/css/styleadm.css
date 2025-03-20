@@ -1234,9 +1234,8 @@ tr:hover {
 
 /* ------------------------------------------------------ */
 /* ENVIAR PREGUNTAS */
-
-/* Estilos para el formulario de agregar pregunta */
-#formPregunta {
+/* Estilos para los formularios dentro de las secciones de servicio (Agregar Test y Agregar Carrera) */
+.service form {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -1250,15 +1249,16 @@ tr:hover {
     overflow: hidden;
 }
 
-#formPregunta label {
+.service form label {
     font-size: 16px;
     color: #ffffff;
     margin-bottom: 5px;
     font-weight: 500;
 }
 
-#formPregunta input,
-#formPregunta select {
+.service form input,
+.service form textarea,
+.service form select {
     padding: 12px;
     border: 1px solid #0003aa;
     border-radius: 5px;
@@ -1271,12 +1271,14 @@ tr:hover {
     box-sizing: border-box;
 }
 
-#formPregunta input:focus,
-#formPregunta select:focus {
+.service form input:focus,
+.service form textarea:focus,
+.service form select:focus {
     border-color: #007BFF;
     box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
 }
 
+/* Estilos específicos para las respuestas dinámicas en Agregar Test */
 #respuestas {
     display: flex;
     flex-direction: column;
@@ -1310,7 +1312,7 @@ tr:hover {
 }
 
 /* Botones del formulario */
-#formPregunta button {
+.service form button {
     background-color: #007BFF;
     color: #ffffff;
     padding: 12px 20px;
@@ -1324,11 +1326,117 @@ tr:hover {
     margin-top: 10px;
 }
 
-#formPregunta button:hover {
+.service form button:hover {
     background-color: #8000FF;
     box-shadow: 0 0 10px rgba(128, 0, 255, 0.7);
 }
 
+/* Mensaje de respuesta */
+#mensaje,
+#mensajeCarrera {
+    margin-top: 15px;
+    color: #ffffff;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Media Queries para diseño responsivo */
+@media (max-width: 768px) {
+    .service form {
+        padding: 15px;
+    }
+
+    .service form label {
+        font-size: 14px;
+    }
+
+    .service form input,
+    .service form textarea,
+    .service form select,
+    #respuestas input[type="text"],
+    #respuestas input[type="number"] {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .service form button {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    #mensaje,
+    #mensajeCarrera {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .service form {
+        padding: 10px;
+    }
+
+    .service form label {
+        font-size: 12px;
+    }
+
+    .service form input,
+    .service form textarea,
+    .service form select,
+    #respuestas input[type="text"],
+    #respuestas input[type="number"] {
+        padding: 8px;
+        font-size: 10px;
+    }
+
+    .service form button {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    #respuestas > div {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    #mensaje,
+    #mensajeCarrera {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 320px) {
+    .service form {
+        padding: 8px;
+    }
+
+    .service form label {
+        font-size: 10px;
+    }
+
+    .service form input,
+    .service form textarea,
+    .service form select,
+    #respuestas input[type="text"],
+    #respuestas input[type="number"] {
+        padding: 6px;
+        font-size: 8px;
+    }
+
+    .service form button {
+        padding: 6px 10px;
+        font-size: 10px;
+    }
+
+    #respuestas > div {
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    #mensaje,
+    #mensajeCarrera {
+        font-size: 8px;
+    }
+}
 /* Mensaje de respuesta */
 #mensaje {
     margin-top: 15px;

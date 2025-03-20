@@ -240,3 +240,85 @@ function deleteQuestion(id) {
             .catch(error => handleAuthError({ response: { status: error.message } }));
     }
 }
+// Enviar nueva carrera
+document.getElementById("formCarrera").onsubmit = function (event) {
+    event.preventDefault();
+    const formData = new FormData(this);
+
+    fetch("/carreras/store", { 
+        method: "POST", 
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        credentials: 'include'
+    })
+        .then(response => {
+            if (!response.ok) throw new Error(response.status);
+            return response.text();
+        })
+        .then(data => {
+            document.getElementById("mensajeCarrera").textContent = "Carrera guardada correctamente.";
+            this.reset(); // Limpiar el formulario
+            setTimeout(() => document.getElementById("mensajeCarrera").textContent = '', 3000);
+            fetch('/carreras'); // Recargar tabla de carreras
+        })
+        .catch(error => handleAuthError({ response: { status: error.message } }));
+};
+
+// Cargar la tabla de carreras
+fetch('/carreras', { credentials: 'include' })
+    .then(response => {
+        if (!response.ok) throw new Error(response.status);
+        return response.text();
+    })
+    .then(data => document.getElementById('carreraTable').innerHTML = data)
+    .catch(error => handleAuthError({ response: { status: error.message } }));
+
+// Mostrar modal con datos de la carrera
+function showUpdateCarreraModal(id, nombre, descripcion, categoria, universidad, nivel_educativo, estado) {
+    document.getElementById("carreraId").value = id;
+    document.getElementById("carreraNombre").value = nombre;
+    document.getElementById("carreraDescripcion").value = descripcion === 'null' ? '' : descripcion;
+    document.getElementById("carreraCategoria").value = categoria === 'null' ? '' : categoria;
+    document.getElementById("carreraUniversidad").value = universidad === 'null' ? '' : universidad;
+    document.getElementById("carreraNivelEducativo").value = nivel_educativo === 'null' ? '' : nivel_educativo; // Añadimos nivel_educativo
+    document.getElementById("carreraEstado").value = estado;
+    document.getElementById("updateCarreraModal").style.display = "block";
+}
+
+function closeCarreraModal() {
+    document.getElementById("updateCarreraModal").style.display = "none";
+}
+
+// Enviar actualización de carrera
+document.getElementById("updateCarreraForm").onsubmit = function (event) {
+    event.preventDefault();
+    let formData = new FormData();
+    formData.append("id", document.getElementById("carreraId").value);
+    formData.append("nombre", document.getElementById("carreraNombre").value);
+    formData.append("descripcion", document.getElementById("carreraDescripcion").value);
+    formData.append("categoria", document.getElementById("carreraCategoria").value);
+    formData.append("universidad", document.getElementById("carreraUniversidad").value);
+    formData.append("nivel_educativo", document.getElementById("carreraNivelEducativo").value); // Añadimos nivel_educativo
+    formData.append("estado", document.getElementById("carreraEstado").value);
+
+    fetch("/carreras/update", { 
+        method: "POST", 
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        credentials: 'include'
+    })
+        .then(response => {
+            if (!response.ok) throw new Error(response.status);
+            return response.text();
+        })
+        .then(data => {
+            alert(data);
+            closeCarreraModal();
+            location.reload();
+        })
+        .catch(error => handleAuthError({ response: { status: error.message } }));
+};
