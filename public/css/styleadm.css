@@ -439,6 +439,61 @@ article { display: none; }
     line-height: 1.6;
 }
 
+
+.form-btn {
+    margin: 0 auto;
+    position: relative;
+    width: 100%;
+    background: var(--border-gradient-onyx);
+    color: var(--orange-yellow-crayola);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 20px;
+    border-radius: 14px;
+    font-size: var(--fs6);
+    text-transform: capitalize;
+    box-shadow: var(--shadow3);
+    z-index: 1;
+    transition: var(--transition1);
+}
+
+.form-btn::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    background: var(--bg-gradient-jet);
+    border-radius: inherit;
+    z-index: -1;
+    transition: var(--transition1);
+}
+
+.form-btn ion-icon {
+    font-size: 16px;
+}
+
+.form-btn:hover {
+    background: var(--bg-gradient-yellow1);
+}
+
+.form-btn::before {
+    background: var(--bg-gradient-yellow2);
+}
+
+.form-btn:disabled {
+    opacity: .7;
+    cursor: not-allowed;
+}
+
+.form-btn:disabled:hover {
+    background: var(--border-gradient-onyx);
+}
+
+.form-btn:disabled:hover::before {
+    background: var(--bg-gradient-jet);
+}
+
 @media (min-width: 450px) {
     .clients-item { min-width: calc(33.33% - 10px); }
 
@@ -1535,4 +1590,7 @@ tr:hover {
     #mensaje {
         font-size: 8px;
     }
+}
+th:nth-child(1), td:nth-child(1) {
+    width: 10%; /* Columna ID más estrecha */
 }

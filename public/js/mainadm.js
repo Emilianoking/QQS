@@ -163,7 +163,7 @@ function showUpdateQuestionModal(id, texto, categoria, estado, respuestas_json) 
     respuestas.forEach((respuesta, index) => {
         answersContainer.innerHTML += `
             <div class="answer-row">
-                <label>Respuesta ${index + 1}:</label>
+                <label >Respuesta ${index + 1}:</label>
                 <input type="text" name="respuestas[]" value="${respuesta.texto}" required>
                 <label>Valor:</label>
                 <input type="number" name="valores[]" value="${respuesta.valor}" required>
@@ -276,17 +276,17 @@ fetch('/carreras', { credentials: 'include' })
     .catch(error => handleAuthError({ response: { status: error.message } }));
 
 // Mostrar modal con datos de la carrera
+// Mostrar modal con datos de la carrera
 function showUpdateCarreraModal(id, nombre, descripcion, categoria, universidad, nivel_educativo, estado) {
     document.getElementById("carreraId").value = id;
     document.getElementById("carreraNombre").value = nombre;
-    document.getElementById("carreraDescripcion").value = descripcion === 'null' ? '' : descripcion;
+    document.getElementById("carreraDescripcion").value = descripcion === 'null' ? '' : descripcion; // Mostramos la descripción completa
     document.getElementById("carreraCategoria").value = categoria === 'null' ? '' : categoria;
     document.getElementById("carreraUniversidad").value = universidad === 'null' ? '' : universidad;
-    document.getElementById("carreraNivelEducativo").value = nivel_educativo === 'null' ? '' : nivel_educativo; // Añadimos nivel_educativo
+    document.getElementById("carreraNivelEducativo").value = nivel_educativo === 'null' ? '' : nivel_educativo;
     document.getElementById("carreraEstado").value = estado;
     document.getElementById("updateCarreraModal").style.display = "block";
 }
-
 function closeCarreraModal() {
     document.getElementById("updateCarreraModal").style.display = "none";
 }

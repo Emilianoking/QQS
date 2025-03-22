@@ -1181,6 +1181,7 @@ textarea.form-input::-webkit-realizer {
 }
 
 .form-btn {
+    margin: 0 auto;
     position: relative;
     width: 100%;
     background: var(--border-gradient-onyx);
