@@ -6,11 +6,12 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\OpenAIController;
 use App\Http\Controllers\CarreraController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PortafolioController;
 use App\Http\Controllers\UserResponseController;
 use App\Http\Controllers\BlogQuestionController;
 use App\Http\Controllers\UserLatestResponsesController;
+use App\Http\Controllers\ResultadoController;
+use Illuminate\Support\Facades\Route;
 
 // Rutas públicas (sin autenticación)
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
@@ -20,25 +21,36 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('adm', fn() => view('adm'))->middleware('auth');
 Route::get('usuario', fn() => view('usuario'))->middleware('auth');
 
-
 // Rutas protegidas por autenticación
 Route::middleware('auth')->group(function () {
-    // Rutas existentes
-    Route::get('/latest-responses', [UserLatestResponsesController::class, 'getLatestResponses'])->middleware('auth');
-    Route::post('/xai', [ApiController::class, 'sendToXai']);
+    // Usuarios
     Route::get('/users', [UserController::class, 'index']);
-    Route::post('/users/update', [UserController::class, 'update']);
-    Route::post('/users/delete', [UserController::class, 'destroy']);
+    Route::post('/users/update/{id}', [UserController::class, 'update']);
+    Route::delete('/users/delete/{id}', [UserController::class, 'destroy']);
+
+    // Preguntas
     Route::get('/questions', [QuestionController::class, 'index']);
     Route::post('/questions/store', [QuestionController::class, 'store']);
-    Route::post('/questions/update', [QuestionController::class, 'update']);
-    Route::post('/questions/delete', [QuestionController::class, 'destroy']);
-    Route::get('/welcome-message', [OpenAIController::class, 'generateWelcomeMessage'])->name('welcome.message');
-    Route::get('/portafolio', [PortafolioController::class, 'index']);
+    Route::post('/questions/update/{id}', [QuestionController::class, 'update']);
+    Route::delete('/questions/delete/{id}', [QuestionController::class, 'destroy']);
+
+    // Carreras
     Route::get('/carreras', [CarreraController::class, 'index']);
     Route::post('/carreras/store', [CarreraController::class, 'store']);
-    Route::post('/carreras/update', [CarreraController::class, 'update']);
-    Route::post('/user-responses', [UserResponseController::class, 'store'])->middleware('auth');
-    Route::get('/blog-questions', [BlogQuestionController::class, 'getQuestions'])->middleware('auth');
-    Route::post('/carreras/delete', [CarreraController::class, 'destroy']);
+    Route::post('/carreras/update/{id}', [CarreraController::class, 'update']);
+    Route::delete('/carreras/delete/{id}', [CarreraController::class, 'destroy']);
+
+    // Resultados (Rangos)
+    Route::get('/resultados', [ResultadoController::class, 'index']);
+    Route::post('/resultados/store', [ResultadoController::class, 'store']);
+    Route::post('/resultados/update/{id}', [ResultadoController::class, 'update']);
+    Route::delete('/resultados/delete/{id}', [ResultadoController::class, 'destroy']);
+
+    // Otras rutas
+    Route::post('/xai', [ApiController::class, 'sendToXai']);
+    Route::get('/welcome-message', [OpenAIController::class, 'generateWelcomeMessage'])->name('welcome.message');
+    Route::get('/portafolio', [PortafolioController::class, 'index']);
+    Route::post('/user-responses', [UserResponseController::class, 'store']);
+    Route::get('/blog-questions', [BlogQuestionController::class, 'getQuestions']);
+    Route::get('/latest-responses', [UserLatestResponsesController::class, 'getLatestResponses']);
 });

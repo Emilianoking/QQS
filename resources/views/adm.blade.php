@@ -238,11 +238,65 @@
                         </form>
                     </div>
                 </div>
+
+                <!-- Nueva sección: Agregar Rango -->
+                <h3 class="h3 service-title">Agregar Rango</h3>
+                <section class="service">
+                    <form id="formResultado">
+                        <label>Rango Mínimo:</label>
+                        <input type="number" name="rango_min" required>
+
+                        <label>Rango Máximo:</label>
+                        <input type="number" name="rango_max" required>
+
+                        <label>Carrera Recomendada:</label>
+                        <input type="text" name="carrera_recomendada" required>
+
+                        <label>Descripción:</label>
+                        <textarea name="descripcion" required></textarea>
+
+                        <button type="submit">Guardar Rango</button>
+                    </form>
+
+                    <div id="mensajeResultado"></div>
+                </section>
+                <!-- Nueva sección: Ver Rangos -->
+                <h3 class="h3 service-title">Ver Rangos</h3>
+                <section class="service">
+                    <div id="resultadoTable">
+                        <!-- Aquí se cargará la tabla de rangos -->
+                    </div>
+                    <!-- Modal para actualizar rango -->
+                    <div id="updateResultadoModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeResultadoModal()">×</span>
+                            <h2>Actualizar Rango</h2>
+                            <form id="updateResultadoForm">
+                                <input type="hidden" id="resultadoId">
+                                <label>Rango Mínimo:</label>
+                                <input type="number" id="resultadoRangoMin" required>
+                                <label>Rango Máximo:</label>
+                                <input type="number" id="resultadoRangoMax" required>
+                                <label>Carrera Recomendada:</label>
+                                <input type="text" id="resultadoCarreraRecomendada" required>
+                                <label>Descripción:</label>
+                                <textarea id="resultadoDescripcion" required></textarea>
+                                <button type="submit">Actualizar Rango</button>
+                            </form>
+                        </div>
+                    </div>
             </article>
+            </section>
+
+
+
+
+
         </div>
     </main>
 
     <script src="{{ asset('js/mainadm.js') }}"></script>
+    <script src="{{ asset('js/admin/resultados.js') }}"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
