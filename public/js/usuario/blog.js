@@ -42,6 +42,7 @@ function renderQuestions(questions) {
                 <div class="blog-content">
                     <div class="blog-meta">
                         <p class="blog-category">${question.categoria || 'Sin categoría'}</p>
+
                     </div>
                     <h3 class="h3 blog-item-title">${question.texto}</h3>
                 </div>

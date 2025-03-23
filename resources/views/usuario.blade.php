@@ -152,39 +152,22 @@
                 </section>
             </article>
 
-            <article class="resume" data-page="resume">
-                <header>
-                    <h2 class="h2 article-title">Resume</h2>
-                </header>
-                <section class="timeline">
-                    <div class="title-wrapper">
-                        <div class="icon-box"><ion-icon name="book-outline"></ion-icon></div>
-                        <h3 class="h3">Education</h3>
-                    </div>
-                    <ol class="timeline-list">
-                        <li class="timeline-item">
-                            <h4 class="h4 timeline-item-title">University school of the arts</h4>
-                            <span>2008 - 2010</span>
-                            <p class="timeline-text">There I learnt a wide range of topics that are essential to
-                                understanding both the theory and practical aspects of computing.</p>
-                        </li>
-                        <!-- Más items aquí -->
-                        <li class="timeline-item">
-                            <h4 class="h4 timeline-item-title">University school of the arts</h4>
-                            <span>2008 - 2010</span>
-                            <p class="timeline-text">There I learnt a wide range of topics that are essential to
-                                understanding both the theory and practical aspects of computing.</p>
-                        </li>
-                        <li class="timeline-item">
-                            <h4 class="h4 timeline-item-title">University school of the arts</h4>
-                            <span>2008 - 2010</span>
-                            <p class="timeline-text">There I learnt a wide range of topics that are essential to
-                                understanding both the theory and practical aspects of computing.</p>
-                        </li>
-                    </ol>
-                </section>
-                <!-- Más secciones de resume -->
-            </article>
+            <!-- Resume -->
+<article class="resume" data-page="resume">
+    <header>
+        <h2 class="h2 article-title">Resume</h2>
+    </header>
+    <section class="timeline">
+        <div class="title-wrapper">
+            <div class="icon-box"><ion-icon name="book-outline"></ion-icon></div>
+            <h3 class="h3">Respuestas</h3>
+        </div>
+        <ol class="timeline-list" id="responsesList">
+            <!-- Las respuestas se cargarán dinámicamente aquí -->
+        </ol>
+    </section>
+    <!-- Más secciones de resume -->
+</article>
 
             <!-- Portafolio -->
             <article class="portafolio" data-page="portafolio">
@@ -319,6 +302,8 @@
     <script src="{{ asset('js/usuario/chat.js') }}"></script>
     <script src="{{ asset('js/usuario/portafolio.js') }}"></script>
     <script src="{{ asset('js/usuario/blog.js') }}"></script>
+    <script src="{{ asset('js/usuario/blog.js') }}"></script>
+    <script src="{{ asset('js/usuario/resume.js') }}"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
