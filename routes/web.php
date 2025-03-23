@@ -12,6 +12,7 @@ use App\Http\Controllers\BlogQuestionController;
 use App\Http\Controllers\UserLatestResponsesController;
 use App\Http\Controllers\ResultadoController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RecommendedCareersController;
 
 // Rutas públicas (sin autenticación)
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
@@ -53,4 +54,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/user-responses', [UserResponseController::class, 'store']);
     Route::get('/blog-questions', [BlogQuestionController::class, 'getQuestions']);
     Route::get('/latest-responses', [UserLatestResponsesController::class, 'getLatestResponses']);
+
+    Route::get('/recommended-careers', [RecommendedCareersController::class, 'getRecommendedCareers'])->middleware('auth');
 });

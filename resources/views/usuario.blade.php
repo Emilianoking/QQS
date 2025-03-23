@@ -153,21 +153,35 @@
             </article>
 
             <!-- Resume -->
-<article class="resume" data-page="resume">
-    <header>
-        <h2 class="h2 article-title">Resume</h2>
-    </header>
-    <section class="timeline">
-        <div class="title-wrapper">
-            <div class="icon-box"><ion-icon name="book-outline"></ion-icon></div>
-            <h3 class="h3">Respuestas</h3>
-        </div>
-        <ol class="timeline-list" id="responsesList">
-            <!-- Las respuestas se cargarán dinámicamente aquí -->
-        </ol>
-    </section>
-    <!-- Más secciones de resume -->
-</article>
+            <article class="resume" data-page="resume">
+                <header>
+                    <h2 class="h2 article-title">Resume</h2>
+                </header>
+
+                <!-- Nueva sección: Carreras Recomendadas -->
+                <section class="timeline">
+                    <div class="title-wrapper">
+                        <div class="icon-box"><ion-icon name="briefcase-outline"></ion-icon></div>
+                        <h3 class="h3">Carreras Recomendadas</h3>
+                    </div>
+                    <ol class="timeline-list" id="recommendedCareersList">
+                        <!-- Las carreras recomendadas se cargarán dinámicamente aquí -->
+                    </ol>
+                </section>
+                
+                <section class="timeline">
+                    <div class="title-wrapper">
+                        <div class="icon-box"><ion-icon name="book-outline"></ion-icon></div>
+                        <h3 class="h3">Respuestas</h3>
+                    </div>
+                    <ol class="timeline-list" id="responsesList">
+                        <!-- Las respuestas se cargarán dinámicamente aquí -->
+                    </ol>
+                </section>
+
+                
+                
+            </article>
 
             <!-- Portafolio -->
             <article class="portafolio" data-page="portafolio">
@@ -217,34 +231,34 @@
                 </div>
                 <div class="carrera-modal-overlay" id="carreraOverlay"></div>
             </article>
-<!-- Blog -->
-<article class="blog" data-page="blog">
-    <header>
-        <h2 class="h2 article-title">Blog</h2>
-    </header>
-    <section class="blog-posts">
-        <ul class="blog-posts-list" id="blogPostsList">
-            <!-- Las preguntas se cargarán dinámicamente aquí -->
-        </ul>
-    </section>
+            <!-- Blog -->
+            <article class="blog" data-page="blog">
+                <header>
+                    <h2 class="h2 article-title">Blog</h2>
+                </header>
+                <section class="blog-posts">
+                    <ul class="blog-posts-list" id="blogPostsList">
+                        <!-- Las preguntas se cargarán dinámicamente aquí -->
+                    </ul>
+                </section>
 
-    <!-- Modal de detalles de la pregunta -->
-    <div class="blog-modal" id="blogModal">
-        <div class="blog-modal-content">
-            <span class="blog-modal-close" id="blogModalClose">×</span>
-            <h3 class="blog-modal-title">Pregunta</h3>
-            <div class="blog-modal-details">
-                <p class="question-text" id="blogQuestionText"></p>
-                <div class="blog-modal-options">
-                    <div class="options-buttons" id="optionsButtons">
-                        <!-- Las opciones se cargarán dinámicamente aquí -->
+                <!-- Modal de detalles de la pregunta -->
+                <div class="blog-modal" id="blogModal">
+                    <div class="blog-modal-content">
+                        <span class="blog-modal-close" id="blogModalClose">×</span>
+                        <h3 class="blog-modal-title">Pregunta</h3>
+                        <div class="blog-modal-details">
+                            <p class="question-text" id="blogQuestionText"></p>
+                            <div class="blog-modal-options">
+                                <div class="options-buttons" id="optionsButtons">
+                                    <!-- Las opciones se cargarán dinámicamente aquí -->
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="blog-modal-overlay" id="blogOverlay"></div>
-</article>
+                <div class="blog-modal-overlay" id="blogOverlay"></div>
+            </article>
 
             <article class="contact" data-page="contact">
                 <header>
@@ -304,6 +318,7 @@
     <script src="{{ asset('js/usuario/blog.js') }}"></script>
     <script src="{{ asset('js/usuario/blog.js') }}"></script>
     <script src="{{ asset('js/usuario/resume.js') }}"></script>
+    <script src="{{ asset('js/usuario/recommendedCareers.js') }}"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
