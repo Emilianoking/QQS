@@ -7,6 +7,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\OpenAIController;
 use App\Http\Controllers\CarreraController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PortafolioController;
 
 // Rutas públicas (sin autenticación)
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
@@ -28,8 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/questions/update', [QuestionController::class, 'update']);
     Route::post('/questions/delete', [QuestionController::class, 'destroy']);
     Route::get('/welcome-message', [OpenAIController::class, 'generateWelcomeMessage'])->name('welcome.message');
-
-    // Nuevas rutas para carreras (ahora protegidas)
+    Route::get('/portafolio', [PortafolioController::class, 'index']);
     Route::get('/carreras', [CarreraController::class, 'index']);
     Route::post('/carreras/store', [CarreraController::class, 'store']);
     Route::post('/carreras/update', [CarreraController::class, 'update']);

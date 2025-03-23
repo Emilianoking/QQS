@@ -72,7 +72,7 @@
                 <ul class="navbar-list">
                     <li class="navbar-item"><button class="navbar-link active" data-nav-link>About</button></li>
                     <li class="navbar-item"><button class="navbar-link" data-nav-link>Resume</button></li>
-                    <li class="navbar-item"><button class="navbar-link" data-nav-link>Portfolio</button></li>
+                    <li class="navbar-item"><button class="navbar-link" data-nav-link>Portafolio</button></li>
                     <li class="navbar-item"><button class="navbar-link" data-nav-link>Blog</button></li>
                     <li class="navbar-item"><button class="navbar-link" data-nav-link>Contact</button></li>
                 </ul>
@@ -162,45 +162,32 @@
                 </section>
                 <!-- Más secciones de resume -->
             </article>
-
-            <article class="portfolio" data-page="portfolio">
-                <header>
-                    <h2 class="h2 article-title">Portfolio</h2>
-                </header>
-                <section class="projects">
-                    <ul class="filter-list">
-                        <li class="filter-item"><button class="active" data-filter-btn>All</button></li>
-                        <li class="filter-item"><button data-filter-btn>Web Design</button></li>
-                        <li class="filter-item"><button data-filter-btn>Applications</button></li>
-                        <li class="filter-item"><button data-filter-btn>Web Development</button></li>
-                    </ul>
-                    <div class="filter-select-box">
-                        <button class="filter-select" data-select>
-                            <div class="select-value" data-select-value>Select Category</div>
-                            <div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div>
-                        </button>
-                        <ul class="select-list">
-                            <li class="select-item"><button data-select-item>All</button></li>
-                            <li class="select-item"><button data-select-item>Web Design</button></li>
-                            <li class="select-item"><button data-select-item>Applications</button></li>
-                            <li class="select-item"><button data-select-item>Web Development</button></li>
-                        </ul>
-                    </div>
-                    <ul class="project-list">
-                        <li class="project-item active" data-filter-item data-category="web development">
-                            <a href="#">
-                                <figure class="project-img">
-                                    <div class="project-item-icon-box"><ion-icon name="eye-outline"></ion-icon></div>
-                                    <img src="https://i.postimg.cc/qRHpHMyd/project-1.jpg" alt="finance" loading="lazy">
-                                </figure>
-                                <h3 class="project-title">Finance</h3>
-                                <p class="project-category">Web Development</p>
-                            </a>
-                        </li>
-                        <!-- Más proyectos aquí -->
-                    </ul>
-                </section>
-            </article>
+            <article class="portafolio" data-page="portafolio">
+        <header>
+            <h2 class="h2 article-title">Portafolio</h2>
+        </header>
+        <section class="projects">
+            <ul class="filter-list">
+                <li class="filter-item"><button class="active" data-filter-btn data-filter="Todas las carreras">Todas las carreras</button></li>
+                <li class="filter-item"><button data-filter-btn data-filter="Uniminuto">Uniminuto</button></li>
+                <li class="filter-item"><button data-filter-btn data-filter="UNAD">UNAD</button></li>
+            </ul>
+            <div class="filter-select-box">
+                <button class="filter-select" data-select>
+                    <div class="select-value" data-select-value>Seleccione una categoría</div>
+                    <div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div>
+                </button>
+                <ul class="select-list">
+                    <li class="select-item"><button data-select-item data-filter="Todas las carreras">Todas las carreras</button></li>
+                    <li class="select-item"><button data-select-item data-filter="Uniminuto">Uniminuto</button></li>
+                    <li class="select-item"><button data-select-item data-filter="UNAD">UNAD</button></li>
+                </ul>
+            </div>
+            <ul class="project-list" id="projectList">
+                <!-- Las carreras se cargarán dinámicamente aquí -->
+            </ul>
+        </section>
+    </article>
 
             <article class="blog" data-page="blog">
                 <header>
@@ -281,6 +268,7 @@
     <script src="{{ asset('js/usuario/main.js') }}"></script>
     <script src="{{ asset('js/usuario/map.js') }}"></script>
     <script src="{{ asset('js/usuario/chat.js') }}"></script>
+    <script src="{{ asset('js/usuario/portafolio.js') }}"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
