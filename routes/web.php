@@ -4,7 +4,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\QuestionController;
-use App\Http\Controllers\OpenAIController;
 use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\PortafolioController;
 use App\Http\Controllers\UserResponseController;
@@ -13,6 +12,7 @@ use App\Http\Controllers\UserLatestResponsesController;
 use App\Http\Controllers\ResultadoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecommendedCareersController;
+use App\Http\Controllers\WelcomeMessageController;
 
 // Rutas públicas (sin autenticación)
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
@@ -49,11 +49,10 @@ Route::middleware('auth')->group(function () {
 
     // Otras rutas
     Route::post('/xai', [ApiController::class, 'sendToXai']);
-    Route::get('/welcome-message', [OpenAIController::class, 'generateWelcomeMessage'])->name('welcome.message');
     Route::get('/portafolio', [PortafolioController::class, 'index']);
     Route::post('/user-responses', [UserResponseController::class, 'store']);
     Route::get('/blog-questions', [BlogQuestionController::class, 'getQuestions']);
     Route::get('/latest-responses', [UserLatestResponsesController::class, 'getLatestResponses']);
-
+    Route::get('/welcome-message', [WelcomeMessageController::class, 'getWelcomeMessage'])->middleware('auth');
     Route::get('/recommended-careers', [RecommendedCareersController::class, 'getRecommendedCareers'])->middleware('auth');
 });

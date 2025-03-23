@@ -86,8 +86,7 @@
                     <h2 class="h2 article-title">Bienvenido</h2>
                 </header>
                 <section class="about-text">
-                    <p><span id="welcome-message">Cargando...</span></p>
-
+                    <div id="welcome-message">Cargando...</div>
                 </section>
 
                 <section class="testimonials">
@@ -168,7 +167,7 @@
                         <!-- Las carreras recomendadas se cargarán dinámicamente aquí -->
                     </ol>
                 </section>
-                
+
                 <section class="timeline">
                     <div class="title-wrapper">
                         <div class="icon-box"><ion-icon name="book-outline"></ion-icon></div>
@@ -179,8 +178,8 @@
                     </ol>
                 </section>
 
-                
-                
+
+
             </article>
 
             <!-- Portafolio -->
@@ -292,23 +291,27 @@
 
     <!-- Script para cargar el mensaje de bienvenida -->
     <script>
-        $(document).ready(function () {
-            // Obtener el mensaje de bienvenida desde la API
-            $.ajax({
-                url: '{{ route('welcome.message') }}',
-                method: 'GET',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (response) {
-                    $('#welcome-message').text(response);
-                },
-                error: function (xhr, status, error) {
-                    $('#welcome-message').text('Error al cargar el mensaje');
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('/welcome-message', { credentials: 'include' })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al cargar el mensaje de bienvenida');
                 }
+                return response.json();
+            })
+            .then(data => {
+                // Reemplazar **texto** por <strong>texto</strong> para formato Markdown
+                let message = data.message
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\n/g, '<br>'); // Convertir saltos de línea a <br>
+                document.getElementById('welcome-message').innerHTML = message;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('welcome-message').innerHTML = 'Error al cargar el mensaje de bienvenida.';
             });
-        });
-    </script>
+    });
+</script>
 
     <!-- Scripts existentes -->
     <script src="{{ asset('js/usuario/main.js') }}"></script>
