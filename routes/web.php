@@ -8,6 +8,8 @@ use App\Http\Controllers\OpenAIController;
 use App\Http\Controllers\CarreraController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PortafolioController;
+use App\Http\Controllers\UserResponseController;
+use App\Http\Controllers\BlogQuestionController;
 
 // Rutas públicas (sin autenticación)
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
@@ -16,6 +18,7 @@ Route::post('logout', [AuthController::class, 'logout']);
 Route::post('register', [AuthController::class, 'register']);
 Route::get('adm', fn() => view('adm'))->middleware('auth');
 Route::get('usuario', fn() => view('usuario'))->middleware('auth');
+
 
 // Rutas protegidas por autenticación
 Route::middleware('auth')->group(function () {
@@ -33,5 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/carreras', [CarreraController::class, 'index']);
     Route::post('/carreras/store', [CarreraController::class, 'store']);
     Route::post('/carreras/update', [CarreraController::class, 'update']);
+    Route::post('/user-responses', [UserResponseController::class, 'store'])->middleware('auth');
+    Route::get('/blog-questions', [BlogQuestionController::class, 'getQuestions'])->middleware('auth');
     Route::post('/carreras/delete', [CarreraController::class, 'destroy']);
 });

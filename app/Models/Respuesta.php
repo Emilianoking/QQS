@@ -11,6 +11,6 @@ class Respuesta extends Model
     // Relación muchos-a-uno con Pregunta
     public function pregunta()
     {
-        return $this->belongsTo(Pregunta::class, 'pregunta_id');
+        return $this->belongsTo(Pregunta::class, 'id_pregunta');
     }
 }

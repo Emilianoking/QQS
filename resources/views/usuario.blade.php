@@ -234,35 +234,34 @@
                 </div>
                 <div class="carrera-modal-overlay" id="carreraOverlay"></div>
             </article>
+<!-- Blog -->
+<article class="blog" data-page="blog">
+    <header>
+        <h2 class="h2 article-title">Blog</h2>
+    </header>
+    <section class="blog-posts">
+        <ul class="blog-posts-list" id="blogPostsList">
+            <!-- Las preguntas se cargarán dinámicamente aquí -->
+        </ul>
+    </section>
 
-            <article class="blog" data-page="blog">
-                <header>
-                    <h2 class="h2 article-title">Blog</h2>
-                </header>
-                <section class="blog-posts">
-                    <ul class="blog-posts-list">
-                        <li class="blog-post-item">
-                            <a href="#">
-                                <figure class="blog-banner-box">
-                                    <img src="https://i.postimg.cc/DysCZrWs/blog-1.jpg" alt="Design conferences in 2024"
-                                        loading="lazy">
-                                </figure>
-                                <div class="blog-content">
-                                    <div class="blog-meta">
-                                        <p class="blog-category">Design</p>
-                                        <span class="dot"></span>
-                                        <time datetime="2024-02-23">Feb 23, 2024</time>
-                                    </div>
-                                    <h3 class="h3 blog-item-title">Design conferences in 2024</h3>
-                                    <p class="blog-text">In 2024, several exciting design conferences are set to take
-                                        place.</p>
-                                </div>
-                            </a>
-                        </li>
-                        <!-- Más posts aquí -->
-                    </ul>
-                </section>
-            </article>
+    <!-- Modal de detalles de la pregunta -->
+    <div class="blog-modal" id="blogModal">
+        <div class="blog-modal-content">
+            <span class="blog-modal-close" id="blogModalClose">×</span>
+            <h3 class="blog-modal-title">Pregunta</h3>
+            <div class="blog-modal-details">
+                <p class="question-text" id="blogQuestionText"></p>
+                <div class="blog-modal-options">
+                    <div class="options-buttons" id="optionsButtons">
+                        <!-- Las opciones se cargarán dinámicamente aquí -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="blog-modal-overlay" id="blogOverlay"></div>
+</article>
 
             <article class="contact" data-page="contact">
                 <header>
@@ -319,6 +318,7 @@
     <script src="{{ asset('js/usuario/map.js') }}"></script>
     <script src="{{ asset('js/usuario/chat.js') }}"></script>
     <script src="{{ asset('js/usuario/portafolio.js') }}"></script>
+    <script src="{{ asset('js/usuario/blog.js') }}"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

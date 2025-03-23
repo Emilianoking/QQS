@@ -8,54 +8,59 @@ use Illuminate\Http\Request;
 class QuestionController extends Controller
 {
     public function index()
-    {
-        try {
-            $preguntas = Pregunta::with('respuestas')->get();
+{
+    try {
+        $preguntas = Pregunta::with('respuestas')->get();
 
-            if ($preguntas->isEmpty()) {
-                return 'No hay preguntas registradas.';
-            }
-
-            $html = '<table border="1">
-                        <tr>
-                            <th>ID</th>
-                            <th>Pregunta</th>
-                            <th>Categoría</th>
-                            <th>Estado</th>
-                            <th>Respuestas</th>
-                            <th>Acciones</th>
-                        </tr>';
-
-            foreach ($preguntas as $pregunta) {
-                // Convertimos las respuestas a un formato JSON para pasarlas al frontend
-                $respuestasJson = json_encode($pregunta->respuestas->map(function ($respuesta) {
-                    return ['texto' => $respuesta->texto, 'valor' => $respuesta->valor];
-                })->toArray());
-
-                $html .= '<tr>';
-                $html .= '<td>' . htmlspecialchars($pregunta->id) . '</td>';
-                $html .= '<td>' . htmlspecialchars($pregunta->texto) . '</td>';
-                $html .= '<td>' . htmlspecialchars($pregunta->categoria ?? 'Sin categoría') . '</td>';
-                $html .= '<td>' . htmlspecialchars($pregunta->estado) . '</td>';
-                $html .= '<td>' . htmlspecialchars($respuestasJson) . '</td>';
-                $html .= '<td>';
-                $html .= '<button class="btn-update" onclick="showUpdateQuestionModal(\'' 
-                    . htmlspecialchars($pregunta->id, ENT_QUOTES) . '\', \'' 
-                    . htmlspecialchars($pregunta->texto, ENT_QUOTES) . '\', \'' 
-                    . htmlspecialchars($pregunta->categoria, ENT_QUOTES) . '\', \'' 
-                    . htmlspecialchars($pregunta->estado, ENT_QUOTES) . '\', \'' 
-                    . htmlspecialchars($respuestasJson, ENT_QUOTES) . '\')">Actualizar</button>';
-                $html .= '<button class="btn-delete" onclick="deleteQuestion(\'' . htmlspecialchars($pregunta->id, ENT_QUOTES) . '\')">Eliminar</button>';
-                $html .= '</td>';
-                $html .= '</tr>';
-            }
-            $html .= '</table>';
-
-            return $html;
-        } catch (\Exception $e) {
-            return 'Error: ' . $e->getMessage();
+        if ($preguntas->isEmpty()) {
+            return 'No hay preguntas registradas.';
         }
+
+        $html = '<table border="1">
+                    <tr>
+                        <th>ID</th>
+                        <th>Pregunta</th>
+                        <th>Categoría</th>
+                        <th>Estado</th>
+                        <th>Respuestas</th>
+                        <th>Acciones</th>
+                    </tr>';
+
+        foreach ($preguntas as $pregunta) {
+            // Formatear las respuestas como una lista legible
+            $respuestasTexto = $pregunta->respuestas->map(function ($respuesta) {
+                return htmlspecialchars($respuesta->texto) . ' (' . htmlspecialchars($respuesta->valor) . ')';
+            })->implode(', ');
+
+            // Convertimos las respuestas a un formato JSON para pasarlas al frontend (para el modal de actualización)
+            $respuestasJson = json_encode($pregunta->respuestas->map(function ($respuesta) {
+                return ['texto' => $respuesta->texto, 'valor' => $respuesta->valor];
+            })->toArray());
+
+            $html .= '<tr>';
+            $html .= '<td>' . htmlspecialchars($pregunta->id) . '</td>';
+            $html .= '<td>' . htmlspecialchars($pregunta->texto) . '</td>';
+            $html .= '<td>' . htmlspecialchars($pregunta->categoria ?? 'Sin categoría') . '</td>';
+            $html .= '<td>' . htmlspecialchars($pregunta->estado) . '</td>';
+            $html .= '<td>' . ($respuestasTexto ?: 'Sin respuestas') . '</td>';
+            $html .= '<td>';
+            $html .= '<button class="btn-update" onclick="showUpdateQuestionModal(\'' 
+                . htmlspecialchars($pregunta->id, ENT_QUOTES) . '\', \'' 
+                . htmlspecialchars($pregunta->texto, ENT_QUOTES) . '\', \'' 
+                . htmlspecialchars($pregunta->categoria, ENT_QUOTES) . '\', \'' 
+                . htmlspecialchars($pregunta->estado, ENT_QUOTES) . '\', \'' 
+                . htmlspecialchars($respuestasJson, ENT_QUOTES) . '\')">Actualizar</button>';
+            $html .= '<button class="btn-delete" onclick="deleteQuestion(\'' . htmlspecialchars($pregunta->id, ENT_QUOTES) . '\')">Eliminar</button>';
+            $html .= '</td>';
+            $html .= '</tr>';
+        }
+        $html .= '</table>';
+
+        return $html;
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
     }
+}
 
     public function store(Request $request)
     {
@@ -70,7 +75,7 @@ class QuestionController extends Controller
             // Crear las respuestas asociadas
             foreach ($request->respuestas as $index => $texto) {
                 Respuesta::create([
-                    'pregunta_id' => $pregunta->id,
+                    'id_pregunta' => $pregunta->id,
                     'texto' => $texto,
                     'valor' => $request->valores[$index],
                 ]);
@@ -101,7 +106,7 @@ class QuestionController extends Controller
             // Crear las nuevas respuestas
             foreach ($request->respuestas as $index => $texto) {
                 Respuesta::create([
-                    'pregunta_id' => $pregunta->id,
+                    'id_pregunta' => $pregunta->id,
                     'texto' => $texto,
                     'valor' => $request->valores[$index],
                 ]);
