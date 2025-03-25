@@ -27,7 +27,7 @@ class RecommendedCareersController extends Controller
                         ->where('id_usuario', $userId)
                         ->groupBy('id_pregunta');
                 })
-                ->with(['respuesta']) // Cargar la relación con la tabla respuestas
+                ->with(['respuesta'])
                 ->get();
 
             if ($latestResponses->isEmpty()) {
@@ -64,6 +64,7 @@ class RecommendedCareersController extends Controller
                     return [
                         'nombre' => $carrera->nombre,
                         'descripcion' => $carrera->descripcion,
+                        'universidad' => $carrera->universidad, // Añadir universidad
                     ];
                 });
 

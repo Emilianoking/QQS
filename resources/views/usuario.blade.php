@@ -91,20 +91,8 @@
 
                 <section class="testimonials">
                     <h3 class="h3 testimonials-title">Testimonials</h3>
-                    <ul class="testimonials-list has-scrollbar">
-                        <li class="testimonials-item">
-                            <div class="content-card" data-testimonials-item>
-                                <figure class="testimonials-avatar-box">
-                                    <img src="https://i.postimg.cc/zGDHfn3G/avatar-1.png" alt="avatar"
-                                        data-testimonials-avatar width="60">
-                                </figure>
-                                <h4 class="h4 testimonials-item-title" data-testimonials-title>nombre de la carrera</h4>
-                                <div class="testimonials-text" data-testimonials-text>
-                                    <p>'nombre del suario' esta carrea es 'Descripcion de la carrera'</p>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- Más testimonials aquí -->
+                    <ul class="testimonials-list has-scrollbar" id="testimonialsList">
+                        <!-- Las carreras recomendadas se cargarán dinámicamente aquí -->
                     </ul>
                 </section>
 
@@ -115,22 +103,18 @@
                                 name="close-outline"></ion-icon></button>
                         <div class="modal-img-wrapper">
                             <figure class="modal-avatar-box">
-                                <img src="https://i.postimg.cc/zGDHfn3G/avatar-1.png" alt="Daniel Lewis" width="80"
+                                <img src="https://i.postimg.cc/zGDHfn3G/avatar-1.png" alt="Carrera" width="80"
                                     data-modal-img>
                             </figure>
                             <img src="https://i.postimg.cc/mZ00RwX7/icon-quote.png" alt="quote icon">
                         </div>
                         <div class="modal-content">
-                            <h4 class="h3 modal-title" data-modal-title>Daniel Lewis</h4>
-                            <time datetime="2023-06-14">14 June, 2023</time>
-                            <div class="modal-text" data-modal-text>
-                                <p>Richard was hired to create a corporate identity. It's modern, clean and with a
-                                    beautiful design.</p>
-                            </div>
+                            <h4 class="h3 modal-title" data-modal-title></h4>
+                            <p><strong>Universidad:</strong> <span data-modal-university></span></p>
+                            <div class="modal-text" data-modal-text></div>
                         </div>
                     </section>
                 </div>
-
                 <section class="clients">
                     <h3 class="h3 clients-title">Universidades convenio</h3>
                     <ul class="clients-list has-scrollbar">
@@ -291,27 +275,27 @@
 
     <!-- Script para cargar el mensaje de bienvenida -->
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        fetch('/welcome-message', { credentials: 'include' })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al cargar el mensaje de bienvenida');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Reemplazar **texto** por <strong>texto</strong> para formato Markdown
-                let message = data.message
-                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                    .replace(/\n/g, '<br>'); // Convertir saltos de línea a <br>
-                document.getElementById('welcome-message').innerHTML = message;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('welcome-message').innerHTML = 'Error al cargar el mensaje de bienvenida.';
-            });
-    });
-</script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/welcome-message', { credentials: 'include' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al cargar el mensaje de bienvenida');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Reemplazar **texto** por <strong>texto</strong> para formato Markdown
+                    let message = data.message
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/\n/g, '<br>'); // Convertir saltos de línea a <br>
+                    document.getElementById('welcome-message').innerHTML = message;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('welcome-message').innerHTML = 'Error al cargar el mensaje de bienvenida.';
+                });
+        });
+    </script>
 
     <!-- Scripts existentes -->
     <script src="{{ asset('js/usuario/main.js') }}"></script>
@@ -320,6 +304,7 @@
     <script src="{{ asset('js/usuario/portafolio.js') }}"></script>
     <script src="{{ asset('js/usuario/blog.js') }}"></script>
     <script src="{{ asset('js/usuario/blog.js') }}"></script>
+    <script src="{{ asset('js/usuario/testimonials.js') }}"></script>
     <script src="{{ asset('js/usuario/resume.js') }}"></script>
     <script src="{{ asset('js/usuario/recommendedCareers.js') }}"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

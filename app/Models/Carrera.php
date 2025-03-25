@@ -14,7 +14,7 @@ class Carrera extends Model
         'descripcion',
         'categoria',
         'universidad',
-        'nivel_educativo', // Añadimos el nuevo campo
+        'nivel_educativo', 
         'estado',
     ];
 }

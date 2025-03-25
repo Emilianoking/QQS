@@ -622,6 +622,7 @@ article.active {
 }
 
 .testimonials-modal {
+    color: var(--white2);
     background: var(--eerie-black2);
     position: relative;
     padding: 15px;
@@ -633,6 +634,11 @@ article.active {
     opacity: 0;
     transition: var(--transition1);
     z-index: 2;
+}
+
+[data-modal-university] {
+
+    color: var(--vegas-gold); 
 }
 .modal-close-btn {
     position: absolute;
