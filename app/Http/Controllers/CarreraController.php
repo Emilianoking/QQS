@@ -80,21 +80,23 @@ class CarreraController extends Controller
         return $this->index();
     }
 
-    public function update(Request $request)
-    {
-        $carrera = Carrera::find($request->id);
-        if ($carrera) {
-            $carrera->nombre = $request->nombre;
-            $carrera->descripcion = $request->descripcion;
-            $carrera->categoria = $request->categoria;
-            $carrera->universidad = $request->universidad;
-            $carrera->nivel_educativo = $request->nivel_educativo;
-            $carrera->estado = $request->estado;
-            $carrera->save();
-            return "Carrera actualizada correctamente.";
-        }
-        return "Error: Carrera no encontrada.";
+    public function update(Request $request, $id)
+{
+    try {
+        $carrera = Carrera::findOrFail($id);
+        $carrera->update([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'categoria' => $request->categoria,
+            'universidad' => $request->universidad,
+            'nivel_educativo' => $request->nivel_educativo,
+            'estado' => $request->estado,
+        ]);
+        return "Carrera actualizada correctamente.";
+    } catch (\Exception $e) {
+        return "Error: " . $e->getMessage();
     }
+}
 
     public function delete(Request $request)
     {

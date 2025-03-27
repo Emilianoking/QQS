@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecommendedCareersController;
 use App\Http\Controllers\WelcomeMessageController;
 
+
 // Rutas públicas (sin autenticación)
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
@@ -32,8 +33,8 @@ Route::middleware('auth')->group(function () {
     // Preguntas
     Route::get('/questions', [QuestionController::class, 'index']);
     Route::post('/questions/store', [QuestionController::class, 'store']);
-    Route::post('/questions/update/{id}', [QuestionController::class, 'update']);
     Route::delete('/questions/delete/{id}', [QuestionController::class, 'destroy']);
+    Route::post('/questions/update/{id}', [QuestionController::class, 'update']);
 
     // Carreras
     Route::get('/carreras', [CarreraController::class, 'index']);

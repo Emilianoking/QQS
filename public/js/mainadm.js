@@ -46,7 +46,8 @@ function closeModal() {
 document.getElementById("updateForm").onsubmit = function (event) {
     event.preventDefault();
     let formData = new FormData();
-    formData.append("id", document.getElementById("userId").value);
+    const userId = document.getElementById("userId").value; // Obtener el ID del usuario
+    formData.append("id", userId);
     formData.append("nombre", document.getElementById("userName").value);
     formData.append("email", document.getElementById("userEmail").value);
     formData.append("telefono", document.getElementById("userPhone").value);
@@ -54,8 +55,8 @@ document.getElementById("updateForm").onsubmit = function (event) {
     formData.append("avatar", document.getElementById("userAvatar").value);
     formData.append("rol", document.getElementById("userRole").value);
 
-    fetch("/users/update", { 
-        method: "POST", 
+    fetch(`/users/update/${userId}`, { // Añadir el ID a la URL
+        method: "POST",
         body: formData,
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -73,7 +74,6 @@ document.getElementById("updateForm").onsubmit = function (event) {
         })
         .catch(error => handleAuthError({ response: { status: error.message } }));
 };
-
 // Eliminar usuario
 function deleteUser(id) {
     if (confirm("¿Seguro que deseas eliminar este usuario?")) {
@@ -182,7 +182,8 @@ function closeQuestionModal() {
 document.getElementById("updateQuestionForm").onsubmit = function (event) {
     event.preventDefault();
     let formData = new FormData();
-    formData.append("id", document.getElementById("questionId").value);
+    const questionId = document.getElementById("questionId").value;
+    formData.append("id", questionId);
     formData.append("texto", document.getElementById("questionText").value);
     formData.append("categoria", document.getElementById("questionCategory").value);
     formData.append("estado", document.getElementById("questionStatus").value);
@@ -190,13 +191,31 @@ document.getElementById("updateQuestionForm").onsubmit = function (event) {
     // Obtener respuestas y valores dinámicamente
     let respuestas = document.getElementsByName("respuestas[]");
     let valores = document.getElementsByName("valores[]");
+    let valid = true;
+
+    // Validar que no haya respuestas vacías
+    for (let i = 0; i < respuestas.length; i++) {
+        if (!respuestas[i].value.trim()) {
+            alert("Todas las respuestas deben tener un texto válido.");
+            valid = false;
+            break;
+        }
+        if (!valores[i].value.trim()) {
+            alert("Todos los valores deben estar definidos.");
+            valid = false;
+            break;
+        }
+    }
+
+    if (!valid) return; // Detener si hay campos vacíos
+
     for (let i = 0; i < respuestas.length; i++) {
         formData.append("respuestas[]", respuestas[i].value);
         formData.append("valores[]", valores[i].value);
     }
 
-    fetch("/questions/update", { 
-        method: "POST", 
+    fetch(`/questions/update/${questionId}`, {
+        method: "POST",
         body: formData,
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -292,19 +311,21 @@ function closeCarreraModal() {
 }
 
 // Enviar actualización de carrera
+// Enviar actualización de carrera
 document.getElementById("updateCarreraForm").onsubmit = function (event) {
     event.preventDefault();
     let formData = new FormData();
-    formData.append("id", document.getElementById("carreraId").value);
+    const carreraId = document.getElementById("carreraId").value; // Obtener el ID de la carrera
+    formData.append("id", carreraId);
     formData.append("nombre", document.getElementById("carreraNombre").value);
     formData.append("descripcion", document.getElementById("carreraDescripcion").value);
     formData.append("categoria", document.getElementById("carreraCategoria").value);
     formData.append("universidad", document.getElementById("carreraUniversidad").value);
-    formData.append("nivel_educativo", document.getElementById("carreraNivelEducativo").value); // Añadimos nivel_educativo
+    formData.append("nivel_educativo", document.getElementById("carreraNivelEducativo").value);
     formData.append("estado", document.getElementById("carreraEstado").value);
 
-    fetch("/carreras/update", { 
-        method: "POST", 
+    fetch(`/carreras/update/${carreraId}`, { // Añadir el ID a la URL
+        method: "POST",
         body: formData,
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')

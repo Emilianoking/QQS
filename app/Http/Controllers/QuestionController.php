@@ -88,36 +88,35 @@ class QuestionController extends Controller
         }
     }
 
-    public function update(Request $request)
-    {
-        try {
-            $pregunta = Pregunta::findOrFail($request->id);
+    public function update(Request $request, $id)
+{
+    try {
+        $pregunta = Pregunta::findOrFail($id);
 
-            // Actualizar la pregunta
-            $pregunta->update([
-                'texto' => $request->texto,
-                'categoria' => $request->categoria,
-                'estado' => $request->estado,
+        // Actualizar la pregunta
+        $pregunta->update([
+            'texto' => $request->texto,
+            'categoria' => $request->categoria,
+            'estado' => $request->estado,
+        ]);
+
+        // Eliminar las respuestas existentes
+        $pregunta->respuestas()->delete();
+
+        // Crear las nuevas respuestas
+        foreach ($request->respuestas as $index => $texto) {
+            Respuesta::create([
+                'id_pregunta' => $pregunta->id,
+                'texto' => $texto,
+                'valor' => $request->valores[$index],
             ]);
-
-            // Eliminar las respuestas existentes
-            $pregunta->respuestas()->delete();
-
-            // Crear las nuevas respuestas
-            foreach ($request->respuestas as $index => $texto) {
-                Respuesta::create([
-                    'id_pregunta' => $pregunta->id,
-                    'texto' => $texto,
-                    'valor' => $request->valores[$index],
-                ]);
-            }
-
-            return "Pregunta actualizada correctamente.";
-        } catch (\Exception $e) {
-            return "Error: " . $e->getMessage();
         }
-    }
 
+        return "Pregunta actualizada correctamente.";
+    } catch (\Exception $e) {
+        return "Error: " . $e->getMessage();
+    }
+}
     public function destroy(Request $request)
     {
         try {

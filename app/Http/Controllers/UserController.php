@@ -57,23 +57,23 @@ class UserController extends Controller
         }
     }
 
-    public function update(Request $request)
-    {
-        try {
-            $user = User::findOrFail($request->id);
-            $user->update([
-                'nombre' => $request->nombre,
-                'email' => $request->email,
-                'telefono' => $request->telefono,
-                'grado' => $request->grado,
-                'avatar' => $request->avatar,
-                'rol' => $request->rol,
-            ]);
-            return "Usuario actualizado correctamente.";
-        } catch (\Exception $e) {
-            return "Error: " . $e->getMessage();
-        }
+    public function update(Request $request, $id)
+{
+    try {
+        $user = User::findOrFail($id);
+        $user->update([
+            'nombre' => $request->nombre,
+            'email' => $request->email,
+            'telefono' => $request->telefono,
+            'grado' => $request->grado,
+            'avatar' => $request->avatar,
+            'rol' => $request->rol,
+        ]);
+        return "Usuario actualizado correctamente.";
+    } catch (\Exception $e) {
+        return "Error: " . $e->getMessage();
     }
+}
 
     public function destroy(Request $request)
     {
