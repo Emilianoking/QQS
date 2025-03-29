@@ -136,35 +136,43 @@
             </article>
 
             <!-- Resume -->
-            <article class="resume" data-page="resume">
-                <header>
-                    <h2 class="h2 article-title">Resume</h2>
-                </header>
+<article class="resume" data-page="resume">
+    <header>
+        <h2 class="h2 article-title">Resume</h2>
+    </header>
 
-                <!-- Nueva sección: Carreras Recomendadas -->
-                <section class="timeline">
-                    <div class="title-wrapper">
-                        <div class="icon-box"><ion-icon name="briefcase-outline"></ion-icon></div>
-                        <h3 class="h3">Carreras Recomendadas</h3>
-                    </div>
-                    <ol class="timeline-list" id="recommendedCareersList">
-                        <!-- Las carreras recomendadas se cargarán dinámicamente aquí -->
-                    </ol>
-                </section>
+    <!-- Nueva sección: Carreras Recomendadas -->
+    <section class="timeline">
+        <div class="title-wrapper">
+            <div class="icon-box"><ion-icon name="briefcase-outline"></ion-icon></div>
+            <h3 class="h3">Carreras Recomendadas</h3>
+        </div>
+        <ol class="timeline-list" id="recommendedCareersList">
+            <!-- Las carreras recomendadas se cargarán dinámicamente aquí -->
+        </ol>
+    </section>
 
-                <section class="timeline">
-                    <div class="title-wrapper">
-                        <div class="icon-box"><ion-icon name="book-outline"></ion-icon></div>
-                        <h3 class="h3">Respuestas</h3>
-                    </div>
-                    <ol class="timeline-list" id="responsesList">
-                        <!-- Las respuestas se cargarán dinámicamente aquí -->
-                    </ol>
-                </section>
+    <section class="timeline">
+        <div class="title-wrapper">
+            <div class="icon-box"><ion-icon name="book-outline"></ion-icon></div>
+            <h3 class="h3">Respuestas</h3>
+        </div>
+        <ol class="timeline-list" id="responsesList">
+            <!-- Las respuestas se cargarán dinámicamente aquí -->
+        </ol>
+    </section>
 
-
-
-            </article>
+    <!-- Nueva sección: Becas -->
+    <section class="timeline">
+        <div class="title-wrapper">
+            <div class="icon-box"><ion-icon name="school-outline"></ion-icon></div>
+            <h3 class="h3">Becas</h3>
+        </div>
+        <ol class="timeline-list" id="becasList">
+            <!-- Las becas se cargarán dinámicamente aquí -->
+        </ol>
+    </section>
+</article>
 
             <!-- Portafolio -->
             <article class="portafolio" data-page="portafolio">
@@ -307,6 +315,7 @@
     <script src="{{ asset('js/usuario/testimonials.js') }}"></script>
     <script src="{{ asset('js/usuario/resume.js') }}"></script>
     <script src="{{ asset('js/usuario/recommendedCareers.js') }}"></script>
+    <script src="{{ asset('js/usuario/becas.js') }}"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

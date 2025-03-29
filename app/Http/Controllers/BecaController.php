@@ -99,4 +99,15 @@ class BecaController extends Controller
             return "Error: " . $e->getMessage();
         }
     }
+
+    // Nuevo método para obtener becas activas
+    public function getActiveBecas()
+    {
+        try {
+            $becas = Beca::where('estado', 'activa')->get();
+            return response()->json($becas);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al cargar las becas: ' . $e->getMessage()], 500);
+        }
+    }
 }

@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/becas/store', [BecaController::class, 'store']);
     Route::post('/becas/update/{id}', [BecaController::class, 'update']);
     Route::delete('/becas/delete/{id}', [BecaController::class, 'destroy']);
+    Route::get('/becas-list', [BecaController::class, 'getActiveBecas']);
 
     // Otras rutas
     Route::post('/xai', [ApiController::class, 'sendToXai']);
