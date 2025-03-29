@@ -13,6 +13,7 @@ use App\Http\Controllers\ResultadoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecommendedCareersController;
 use App\Http\Controllers\WelcomeMessageController;
+use App\Http\Controllers\BecaController;
 
 
 // Rutas públicas (sin autenticación)
@@ -47,6 +48,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/resultados/store', [ResultadoController::class, 'store']);
     Route::post('/resultados/update/{id}', [ResultadoController::class, 'update']);
     Route::delete('/resultados/delete/{id}', [ResultadoController::class, 'destroy']);
+    
+    // Becas
+    Route::get('/becas', [BecaController::class, 'index']);
+    Route::post('/becas/store', [BecaController::class, 'store']);
+    Route::post('/becas/update/{id}', [BecaController::class, 'update']);
+    Route::delete('/becas/delete/{id}', [BecaController::class, 'destroy']);
 
     // Otras rutas
     Route::post('/xai', [ApiController::class, 'sendToXai']);

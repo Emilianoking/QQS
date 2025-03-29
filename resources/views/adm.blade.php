@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,14 +8,12 @@
     <link rel="stylesheet" href="{{ asset('css/styleadm.css') }}">
     <link rel="shortcut icon" href="https://i.postimg.cc/9fqYVvxh/logo.png" type="image/x-icon">
 </head>
-
 <body>
     <main>
         <aside class="sidebar" data-sidebar>
             <div class="sidebar-info">
                 <figure class="avatar-box">
-                    <img src="{{ Auth::user()->avatar ?? 'https://i.postimg.cc/JzBWVhW4/my-avatar.png' }}" alt="avatar"
-                        width="80">
+                    <img src="{{ Auth::user()->avatar ?? 'https://i.postimg.cc/JzBWVhW4/my-avatar.png' }}" alt="avatar" width="80">
                 </figure>
                 <div class="info-content">
                     <h1 class="name">{{ Auth::user()->nombre ?? 'Invitado' }}</h1>
@@ -26,7 +23,6 @@
                     <ion-icon name="chevron-down"></ion-icon>
                 </button>
             </div>
-
             <div class="sidebar-info-more">
                 <div class="separator"></div>
                 <ul class="contacts-list">
@@ -69,20 +65,17 @@
                 </form>
             </div>
         </aside>
-
         <div class="main-content">
             <article class="about active" data-page="about">
                 <header>
                     <h2 class="h2 article-title">Bienvenido Administrador</h2>
                 </header>
-
                 <h3 class="h3 service-title">Ver usuarios</h3>
                 <section class="service">
                     <div id="userTable">
                         <!-- Aquí se cargará la tabla de usuarios -->
                     </div>
                 </section>
-
                 <!-- Modal para actualizar usuario -->
                 <div id="updateModal" class="modal">
                     <div class="modal-content">
@@ -109,16 +102,13 @@
                         </form>
                     </div>
                 </div>
-
                 <h3 class="h3 service-title">Agregar Test</h3>
                 <section class="service">
                     <form id="formPregunta">
                         <label>Pregunta:</label>
                         <input type="text" name="pregunta" required>
-
                         <label>Categoría:</label>
                         <input type="text" name="categoria">
-
                         <label>Respuestas y valores:</label>
                         <div id="respuestas">
                             <div class="answer-row">
@@ -126,21 +116,17 @@
                                 <input type="number" name="valores[]" placeholder="Valor" required>
                             </div>
                         </div>
-
                         <button type="button" id="agregarRespuesta">Añadir otra respuesta</button>
                         <button type="submit">Guardar Pregunta</button>
                     </form>
-
                     <div id="mensaje"></div>
                 </section>
-
                 <h3 class="h3 service-title">Ver Test</h3>
                 <section class="service">
                     <div id="questionTable">
                         <!-- Aquí se cargará la tabla de preguntas -->
                     </div>
                 </section>
-
                 <!-- Modal para actualizar pregunta -->
                 <div id="updateQuestionModal" class="modal">
                     <div class="modal-content">
@@ -169,16 +155,12 @@
                     <form id="formCarrera">
                         <label>Nombre:</label>
                         <input type="text" name="nombre" required>
-
                         <label>Descripción:</label>
                         <textarea name="descripcion"></textarea>
-
                         <label>Categoría:</label>
                         <input type="text" name="categoria">
-
                         <label>Universidad:</label>
                         <input type="text" name="universidad">
-
                         <label>Nivel Educativo:</label>
                         <select name="nivel_educativo">
                             <option value="">Seleccione un nivel</option>
@@ -186,19 +168,15 @@
                             <option value="tecnólogo">Tecnólogo</option>
                             <option value="profesional">Profesional</option>
                         </select>
-
                         <label>Estado:</label>
                         <select name="estado">
                             <option value="activa">Activa</option>
                             <option value="inactiva">Inactiva</option>
                         </select>
-
                         <button type="submit">Guardar Carrera</button>
                     </form>
-
                     <div id="mensajeCarrera"></div>
                 </section>
-
                 <!-- Nueva sección: Ver Carreras -->
                 <h3 class="h3 service-title">Ver Carreras</h3>
                 <section class="service">
@@ -206,7 +184,6 @@
                         <!-- Aquí se cargará la tabla de carreras -->
                     </div>
                 </section>
-
                 <!-- Modal para actualizar carrera -->
                 <div id="updateCarreraModal" class="modal">
                     <div class="modal-content">
@@ -238,26 +215,72 @@
                         </form>
                     </div>
                 </div>
-
+                <!-- Nueva sección: Agregar Beca -->
+                <h3 class="h3 service-title">Agregar Beca</h3>
+                <section class="service">
+                    <form id="formBeca">
+                        <label>Nombre:</label>
+                        <input type="text" name="nombre" required>
+                        <label>Entidad:</label>
+                        <input type="text" name="entidad" required>
+                        <label>Descripción:</label>
+                        <textarea name="descripcion" required></textarea>
+                        <label>Requisitos:</label>
+                        <textarea name="requisitos" required></textarea>
+                        <label>Estado:</label>
+                        <select name="estado">
+                            <option value="activa">Activa</option>
+                            <option value="inactiva">Inactiva</option>
+                        </select>
+                        <button type="submit">Guardar Beca</button>
+                    </form>
+                    <div id="mensajeBeca"></div>
+                </section>
+                <!-- Nueva sección: Ver Becas -->
+                <h3 class="h3 service-title">Ver Becas</h3>
+                <section class="service">
+                    <div id="becaTable">
+                        <!-- Aquí se cargará la tabla de becas -->
+                    </div>
+                </section>
+                <!-- Modal para actualizar beca -->
+                <div id="updateBecaModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeBecaModal()">×</span>
+                        <h2>Actualizar Beca</h2>
+                        <form id="updateBecaForm">
+                            <input type="hidden" id="becaId">
+                            <label>Nombre:</label>
+                            <input type="text" id="becaNombre" required>
+                            <label>Entidad:</label>
+                            <input type="text" id="becaEntidad" required>
+                            <label>Descripción:</label>
+                            <textarea id="becaDescripcion" required></textarea>
+                            <label>Requisitos:</label>
+                            <textarea id="becaRequisitos" required></textarea>
+                            <label>Estado:</label>
+                            <select id="becaEstado">
+                                <option value="activa">Activa</option>
+                                <option value="inactiva">Inactiva</option>
+                            </select>
+                            <button type="submit">Actualizar Beca</button>
+                        </form>
+                    </div>
+                </div>
                 <!-- Nueva sección: Agregar Rango -->
                 <h3 class="h3 service-title">Agregar Rango</h3>
                 <section class="service">
                     <form id="formResultado">
                         <label>Rango Mínimo:</label>
                         <input type="number" name="rango_min" required>
-
                         <label>Rango Máximo:</label>
                         <input type="number" name="rango_max" required>
-
                         <label>Carrera Recomendada:</label>
                         <input type="text" name="carrera_recomendada" required>
-
                         <label>Descripción:</label>
                         <textarea name="descripcion" required></textarea>
-
                         <button type="submit">Guardar Rango</button>
                     </form>
-
                     <div id="mensajeResultado"></div>
                 </section>
                 <!-- Nueva sección: Ver Rangos -->
@@ -285,20 +308,13 @@
                             </form>
                         </div>
                     </div>
+                </section>
             </article>
-            </section>
-
-
-
-
-
         </div>
     </main>
-
     <script src="{{ asset('js/mainadm.js') }}"></script>
     <script src="{{ asset('js/admin/resultados.js') }}"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
-
 </html>

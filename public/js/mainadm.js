@@ -343,3 +343,111 @@ document.getElementById("updateCarreraForm").onsubmit = function (event) {
         })
         .catch(error => handleAuthError({ response: { status: error.message } }));
 };
+
+// Enviar nueva beca
+document.getElementById("formBeca").onsubmit = function (event) {
+    event.preventDefault();
+    const formData = new FormData(this);
+
+    fetch("/becas/store", { 
+        method: "POST", 
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        credentials: 'include'
+    })
+        .then(response => {
+            if (!response.ok) throw new Error(response.status);
+            return response.text();
+        })
+        .then(data => {
+            document.getElementById("mensajeBeca").textContent = "Beca guardada correctamente.";
+            this.reset();
+            setTimeout(() => document.getElementById("mensajeBeca").textContent = '', 3000);
+            fetch('/becas');
+        })
+        .catch(error => handleAuthError({ response: { status: error.message } }));
+};
+
+// Cargar la tabla de becas
+fetch('/becas', { credentials: 'include' })
+    .then(response => {
+        if (!response.ok) throw new Error(response.status);
+        return response.text();
+    })
+    .then(data => document.getElementById('becaTable').innerHTML = data)
+    .catch(error => handleAuthError({ response: { status: error.message } }));
+
+// Mostrar modal con datos de la beca
+function showUpdateBecaModal(id, nombre, entidad, descripcion, requisitos, estado) {
+    document.getElementById("becaId").value = id;
+    document.getElementById("becaNombre").value = nombre;
+    document.getElementById("becaEntidad").value = entidad;
+    document.getElementById("becaDescripcion").value = descripcion === 'null' ? '' : descripcion;
+    document.getElementById("becaRequisitos").value = requisitos === 'null' ? '' : requisitos;
+    document.getElementById("becaEstado").value = estado;
+    document.getElementById("updateBecaModal").style.display = "block";
+}
+
+function closeBecaModal() {
+    document.getElementById("updateBecaModal").style.display = "none";
+}
+
+// Enviar actualización de beca
+document.getElementById("updateBecaForm").onsubmit = function (event) {
+    event.preventDefault();
+    let formData = new FormData();
+    const becaId = document.getElementById("becaId").value;
+    formData.append("id", becaId);
+    formData.append("nombre", document.getElementById("becaNombre").value);
+    formData.append("entidad", document.getElementById("becaEntidad").value);
+    formData.append("descripcion", document.getElementById("becaDescripcion").value);
+    formData.append("requisitos", document.getElementById("becaRequisitos").value);
+    formData.append("estado", document.getElementById("becaEstado").value);
+
+    fetch(`/becas/update/${becaId}`, { 
+        method: "POST", 
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        credentials: 'include'
+    })
+        .then(response => {
+            if (!response.ok) throw new Error(response.status);
+            return response.text();
+        })
+        .then(data => {
+            alert(data);
+            closeBecaModal();
+            location.reload();
+        })
+        .catch(error => handleAuthError({ response: { status: error.message } }));
+};
+
+// Eliminar beca
+function deleteBeca(id) {
+    if (confirm("¿Seguro que deseas eliminar esta beca?")) {
+        let formData = new FormData();
+        formData.append("id", id);
+
+        fetch("/becas/delete", { 
+            method: "POST", 
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            credentials: 'include'
+        })
+            .then(response => {
+                if (!response.ok) throw new Error(response.status);
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                location.reload();
+            })
+            .catch(error => handleAuthError({ response: { status: error.message } }));
+    }
+}
